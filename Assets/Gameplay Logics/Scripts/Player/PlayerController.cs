@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private CharacterController characterController;
+    private Animator characterAnimator;
     private float defaultSpeed = 2f;
     private float defaultGravity = -2f;
 
@@ -11,22 +12,28 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Gravity can be entered positive too")]
     public float gravity = 9.81f;
 
+    [Header("Animation Settings")]
+    public string animationBlendName = "Speed";
+    public float animationSmoothTime = 0.2f;
+
     private Vector3 velocity;
+    private int animationBlendValue;
 
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
-        if (!characterController)
-            Debug.Log("No character Found");
+        if (!characterController) Debug.Log("No character Found");
+
+        characterAnimator = GetComponentInChildren<Animator>();
+        if (!characterAnimator) Debug.Log("No Animators");
     }
 
     private void Start()
     {
+        animationBlendValue = Animator.StringToHash(animationBlendName);
         if (speed <= 0) speed = defaultSpeed;
 
         gravity = (gravity > 0) ? -gravity : gravity;
-
-        Debug.Log($"Game Gravity {gravity}");
     }
 
     private void Update()
@@ -43,6 +50,8 @@ public class PlayerController : MonoBehaviour
             velocity.y += gravity * Time.deltaTime;
         else
             velocity.y += defaultGravity;
+
+        velocity = velocity.normalized;
 
         characterController.Move(velocity);
     }
