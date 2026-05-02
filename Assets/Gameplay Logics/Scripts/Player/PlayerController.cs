@@ -4,11 +4,11 @@ public class PlayerController : MonoBehaviour
 {
     private CharacterController characterController;
     private Animator characterAnimator;
-    private float defaultSpeed = 2f;
-    private float defaultGravity = -2f;
 
+    [Header("Player Settings")]
     public float speed = 2f;
 
+    [Header("Gravity Settings")]
     [Tooltip("Gravity can be entered positive too")]
     public float gravity = 9.81f;
 
@@ -17,7 +17,13 @@ public class PlayerController : MonoBehaviour
     public float animationSmoothTime = 0.2f;
 
     private Vector3 velocity;
-    private int animationBlendValue;
+    private Vector3 moveDirection;
+    private Vector3 finalMovement;
+
+    private float defaultSpeed = 2f;
+    private float defaultGravity = -2f;
+
+    private int animationBlendHash;
 
     private void Awake()
     {
@@ -30,7 +36,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        animationBlendValue = Animator.StringToHash(animationBlendName);
+        animationBlendHash = Animator.StringToHash(animationBlendName);
         if (speed <= 0) speed = defaultSpeed;
 
         gravity = (gravity > 0) ? -gravity : gravity;
@@ -39,20 +45,42 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         HandleMovement();
+        HandleAnimations();
     }
 
     void HandleMovement()
     {
-        velocity.x = InputsManager.Instance.movementInput.x * speed * Time.deltaTime;
-        velocity.z = InputsManager.Instance.movementInput.y * speed * Time.deltaTime;
+        HandleGravity();
 
-        if (!characterController.isGrounded)
-            velocity.y += gravity * Time.deltaTime;
+        velocity.x = InputsManager.Instance.movementInput.x;
+        velocity.z = InputsManager.Instance.movementInput.y;
+
+        moveDirection = transform.right * velocity.x + transform.forward * velocity.z;
+
+        finalMovement = new Vector3(moveDirection.x, velocity.y, moveDirection.z);
+
+        characterController.Move(finalMovement * speed * Time.deltaTime);
+    }
+
+    void HandleAnimations()
+    {
+        float moveDirMagnitude = new Vector3(moveDirection.x, 0f, moveDirection.z).magnitude;
+
+        if (moveDirMagnitude > 0.1f)
+        {
+            characterAnimator.SetFloat(animationBlendHash, 1f, animationSmoothTime, Time.deltaTime);
+        }
         else
-            velocity.y += defaultGravity;
+        {
+            characterAnimator.SetFloat(animationBlendHash, 0f, animationSmoothTime, Time.deltaTime);
+        }
+    }
 
-        velocity = velocity.normalized;
-
-        characterController.Move(velocity);
+    void HandleGravity()
+    {
+        if (characterController.isGrounded)
+            velocity.y = defaultGravity;
+        else
+            velocity.y += gravity * Time.deltaTime;
     }
 }
