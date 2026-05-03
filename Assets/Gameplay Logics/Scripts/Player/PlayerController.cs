@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
 
     private float defaultSpeed = 2f;
     private float defaultGravity = -2f;
+    private float moveDirMagnitude;
 
     private int animationBlendHash;
 
@@ -57,14 +58,14 @@ public class PlayerController : MonoBehaviour
 
         moveDirection = transform.right * velocity.x + transform.forward * velocity.z;
 
-        finalMovement = new Vector3(moveDirection.x, velocity.y, moveDirection.z);
+        finalMovement.Set(moveDirection.x, velocity.y, moveDirection.z);
 
         characterController.Move(finalMovement * speed * Time.deltaTime);
     }
 
     void HandleAnimations()
     {
-        float moveDirMagnitude = new Vector3(moveDirection.x, 0f, moveDirection.z).magnitude;
+        moveDirMagnitude = new Vector3(moveDirection.x, 0f, moveDirection.z).magnitude;
 
         if (moveDirMagnitude > 0.1f)
         {
