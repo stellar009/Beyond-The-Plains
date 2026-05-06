@@ -269,6 +269,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 495b3d5aa5d5b3843879fe5ded3cde3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCamera
+  smoothTime: 0.01
+  distanceTPP: 2
   sensitivity: 50
   maxLookAngle: 35
   minLookAngle: -60

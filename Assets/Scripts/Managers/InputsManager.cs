@@ -54,6 +54,8 @@ public class InputsManager : MonoBehaviour
     /// </summary>
     public bool isSprinting { get; private set; }
 
+    public bool changePerspective {  get; private set; }
+
     // ==================== STATE VARIABLES ====================
     /// <summary>
     /// Tracks whether the game is currently paused
@@ -116,6 +118,7 @@ public class InputsManager : MonoBehaviour
         // This activates all actions within the "Player" action map
         // Actions won't fire events until their map is enabled
         gameInteractions.Player.Enable();
+        gameInteractions.Camera.Enable();
 
         // ========== MOVEMENT INPUT SUBSCRIPTIONS ==========
         // Subscribe to Movement action events
@@ -144,6 +147,8 @@ public class InputsManager : MonoBehaviour
         // Subscribe to Sprint action (Left Shift Key)
         // Toggle-based: each press flips the state
         gameInteractions.Player.Sprint.performed += Sprint;
+
+        gameInteractions.Camera.Perspective.performed += SwapPerspective;
     }
 
     /// <summary>
@@ -156,6 +161,7 @@ public class InputsManager : MonoBehaviour
         // Disable the Player action map
         // Stops all input processing for this action map
         gameInteractions.Player.Disable();
+        gameInteractions.Camera.Disable();
 
         // ========== UNSUBSCRIBE FROM ALL EVENTS ==========
         // Must remove all event handlers to prevent:
@@ -174,6 +180,8 @@ public class InputsManager : MonoBehaviour
         gameInteractions.Player.Attacks.performed -= InAttackState;
 
         gameInteractions.Player.Sprint.performed -= Sprint;
+
+        gameInteractions.Camera.Perspective.performed -= SwapPerspective;
     }
 
     // ==================================================================
@@ -273,6 +281,11 @@ public class InputsManager : MonoBehaviour
     {
         // Toggle boolean: if true becomes false, if false becomes true
         isSprinting = !isSprinting;
+    }
+
+    void SwapPerspective(InputAction.CallbackContext ctx)
+    {
+        changePerspective = !changePerspective;
     }
 
     // ==================================================================

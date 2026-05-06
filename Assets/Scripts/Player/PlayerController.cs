@@ -374,7 +374,7 @@ public class PlayerController : MonoBehaviour
         // Determine if player is moving (above small threshold)
         // Threshold of 0.1 prevents jittery animations from tiny movements
         // (e.g., controller stick drift, accidental key taps)
-        if (moveDirMagnitude > 0.1f)
+        if (moveDirMagnitude > 0.1f && InputsManager.Instance.isSprinting)
         {
             // PLAYER IS MOVING
             // Set animation blend parameter to 1.0 (full movement)
@@ -387,11 +387,15 @@ public class PlayerController : MonoBehaviour
             // 4. DeltaTime (frame time for frame-rate independence)
             characterAnimator.SetFloat(animationBlendHash, 1f, animationSmoothTime, Time.deltaTime);
         }
-        else
+        else if(moveDirMagnitude > 0.1f && !InputsManager.Instance.isSprinting)
         {
             // PLAYER IS IDLE
             // Set animation blend parameter to 0.0 (no movement)
             // The Animator will show idle animation
+            characterAnimator.SetFloat(animationBlendHash, 0.5f, animationSmoothTime, Time.deltaTime);
+        }
+        else
+        {
             characterAnimator.SetFloat(animationBlendHash, 0f, animationSmoothTime, Time.deltaTime);
         }
     }

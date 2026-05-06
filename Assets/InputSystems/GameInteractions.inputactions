@@ -153,6 +153,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Camera",
+            "id": "9dc05fcf-e8e5-4f00-ba24-63fd22741855",
+            "actions": [
+                {
+                    "name": "Perspective",
+                    "type": "Button",
+                    "id": "4fdf50c0-40ed-4d3c-9e2a-4e6324471fd8",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "bbd6e2c8-268d-4017-8ab4-fcbad7c28fae",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Perspective",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
