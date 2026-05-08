@@ -817,7 +817,7 @@ MonoBehaviour:
   gravity: 9.81
   animationBlendName: Speed
   animationSmoothTime: 0.1
-  sprintMultiplier: 3
+  sprintMultiplier: 2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
