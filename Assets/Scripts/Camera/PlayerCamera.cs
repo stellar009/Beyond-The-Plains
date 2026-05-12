@@ -155,10 +155,6 @@ public class PlayerCamera : MonoBehaviour
         mouseX = InputsManager.Instance.cameraInputs.x * sensitivity * Time.deltaTime;
         mouseY = InputsManager.Instance.cameraInputs.y * sensitivity * Time.deltaTime;
 
-        // Update perspective mode from Input Manager
-        // This is toggled by a key binding (e.g., 'V' key or D-pad)
-        isTPP = InputsManager.Instance.changePerspective;
-
         // Calculate vertical rotation (looking up/down)
         // Subtract because mouse Y up should look up (negative Euler angle)
         xRotation -= mouseY;
@@ -169,10 +165,6 @@ public class PlayerCamera : MonoBehaviour
         // Store horizontal rotation for LateUpdate
         // This will rotate the entire player body left/right
         yRotation = mouseX;
-
-        // Update camera position for perspective switching
-        // Called every frame to ensure smooth continuous animation
-        SwitchPerspective();
     }
 
     /// <summary>

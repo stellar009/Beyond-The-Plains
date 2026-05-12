@@ -124,11 +124,6 @@ public class InputsManager : MonoBehaviour
         // Actions won't fire events until their map is enabled
         gameInteractions.Player.Enable();
 
-        // Enable the Camera action map
-        // This activates all actions within the "Player" action map
-        // Actions won't fire events until their map is enabled
-        gameInteractions.Camera.Enable();
-
         // ========== MOVEMENT INPUT SUBSCRIPTIONS ==========
         // Subscribe to Movement action events
         // "performed" fires when input starts/changes (button press)
@@ -156,11 +151,6 @@ public class InputsManager : MonoBehaviour
         // Subscribe to Sprint action (Left Shift Key)
         // Toggle-based: each press flips the state
         gameInteractions.Player.Sprint.performed += Sprint;
-
-        // ========== PERSPECTIVE INPUT SUBSCRIPTION ==========
-        // Subscribe to Perspective action (Z Key)
-        // Toggle-based: each press flips the state
-        gameInteractions.Camera.Perspective.performed += SwapPerspective;
     }
 
     /// <summary>
@@ -170,10 +160,9 @@ public class InputsManager : MonoBehaviour
     /// </summary>
     private void OnDisable()
     {
-        // Disable the Player and Camera action map
+        // Disable the Player action map
         // Stops all input processing for this action map
         gameInteractions.Player.Disable();
-        gameInteractions.Camera.Disable();
 
         // ========== UNSUBSCRIBE FROM ALL EVENTS ==========
         // Must remove all event handlers to prevent:
@@ -192,8 +181,6 @@ public class InputsManager : MonoBehaviour
         gameInteractions.Player.Attacks.performed -= InAttackState;
 
         gameInteractions.Player.Sprint.performed -= Sprint;
-
-        gameInteractions.Camera.Perspective.performed -= SwapPerspective;
     }
 
     // ==================================================================
@@ -293,19 +280,6 @@ public class InputsManager : MonoBehaviour
     {
         // Toggle boolean: if true becomes false, if false becomes true
         isSprinting = !isSprinting;
-    }
-
-    /// <summary>
-    /// Handles Perspective button press - TOGGLE implementation
-    /// Flips the perspective state between true and false on each button press
-    /// Note: This is NOT hold-based. Each click toggles the state.
-    /// Use this for toggle-able actions like auto-fire or mode switching
-    /// </summary>
-    /// <param name="ctx">Callback context</param>
-    void SwapPerspective(InputAction.CallbackContext ctx)
-    {
-        // Toggle boolean: if true becomes false, if false becomes true
-        changePerspective = !changePerspective;
     }
 
     // ==================================================================

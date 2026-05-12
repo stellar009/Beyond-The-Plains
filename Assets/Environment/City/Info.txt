@@ -1,0 +1,8 @@
+Theme: Cyberpunk
+
+Assets: 
+Tall Buildings with highly emissive windows
+	-> all building windows must be joint as a single component
+	-> windows must be with HDR colors
+
+Application: Blender 3D
