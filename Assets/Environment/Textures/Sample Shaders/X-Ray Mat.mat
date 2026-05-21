@@ -57,6 +57,7 @@ Material:
     m_Floats:
     - _AlphaClip: 0
     - _AlphaToMask: 0
+    - _Alpha_Clipping: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _CastShadows: 1
@@ -76,6 +77,6 @@ Material:
     - _ZWriteControl: 0
     m_Colors:
     - _Edge_Color: {r: 0, g: 0.40301293, b: 5.3403134, a: 1}
-    - _Emmision_Color: {r: 1, g: 0, b: 0.14169824, a: 1}
+    - _Emmision_Color: {r: 1, g: 0, b: 0.14169821, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

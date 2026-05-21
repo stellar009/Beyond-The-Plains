@@ -55,8 +55,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _Ambient_Occlusion: 1
     - _Enable_Inner_Color: 0
-    - _Fresnel_Power: 4.7
+    - _Fresnel_Power: 6
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:

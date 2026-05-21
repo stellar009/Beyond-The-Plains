@@ -53,7 +53,7 @@ Material:
     - _DstBlend: 10
     - _DstBlendAlpha: 10
     - _Enable_Emission: 1
-    - _Intensity: 1
+    - _Intensity: 2
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 0
