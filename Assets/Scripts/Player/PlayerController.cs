@@ -25,13 +25,6 @@ public class PlayerController : MonoBehaviour
     private CharacterController characterController;
 
     /// <summary>
-    /// Reference to the Animator component on a child object
-    /// Typically attached to the visual mesh/armature, not the root controller
-    /// Controls animation states like idle, walk, run, jump, etc.
-    /// </summary>
-    private Animator characterAnimator;
-
-    /// <summary>
     /// Reference to the main camera (used for camera-relative movement)
     /// Camera direction determines which way "forward" is for the player
     /// </summary>
@@ -60,13 +53,6 @@ public class PlayerController : MonoBehaviour
     /// - 15f-20f: Heavy gravity (ground pound feel)
     /// </summary>
     [Range(5f, 20f)] public float gravity = 9.81f;
-
-    [Header("Animation Settings")]
-    [Tooltip("Name of the Animator parameter that controls movement blend tree")]
-    public string animationBlendName = "Speed";
-
-    [Tooltip("How quickly animations transition between states (lower = smoother)")]
-    public float animationSmoothTime = 0.2f;
 
     [Header("Sprint Settings")]
 
@@ -160,15 +146,6 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private float currentSpeed;
 
-    // ==================== OPTIMIZATION ====================
-
-    /// <summary>
-    /// Hashed version of the animation parameter name
-    /// Using integer hash instead of string is significantly faster
-    /// Animator.StringToHash() converts "Speed" → integer ID once at startup
-    /// </summary>
-    private int animationBlendHash;
-
     // ==================================================================
     //                          INITIALIZATION
     // ==================================================================
@@ -184,12 +161,6 @@ public class PlayerController : MonoBehaviour
         // Required for collision-based movement
         characterController = GetComponent<CharacterController>();
         if (!characterController) Debug.LogError("No CharacterController found on Player!");
-
-        // Get Animator from child objects (not this object)
-        // Typically the visual mesh with the animation rig is a child
-        // GetComponentInChildren searches this object AND all children recursively
-        characterAnimator = GetComponentInChildren<Animator>();
-        if (!characterAnimator) Debug.LogError("No Animator found on Player or children!");
 
         // Get main camera using Unity's tag system
         // Camera.main finds the camera tagged "MainCamera" in the scene
@@ -208,10 +179,6 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        // Convert animation parameter name to hash for performance
-        // "Speed" → some integer like 123456789
-        // Using hash avoids string comparison every frame in Update()
-        animationBlendHash = Animator.StringToHash(animationBlendName);
 
         // Validate speed - ensure it's positive
         // If user enters 0 or negative in inspector, use default
@@ -245,9 +212,6 @@ public class PlayerController : MonoBehaviour
     {
         // Process movement input, camera-relative conversion, and physics
         HandleMovement();
-
-        // Update animator based on current movement state
-        HandleAnimations();
     }
 
     // ==================================================================
@@ -337,67 +301,6 @@ public class PlayerController : MonoBehaviour
         // Multiply by currentSpeed (walk or sprint) and Time.deltaTime (frame time normalization)
         // This ensures consistent movement regardless of framerate
         characterController.Move(finalMovement * currentSpeed * Time.deltaTime);
-    }
-
-    // ==================================================================
-    //                          ANIMATION SYSTEM
-    // ==================================================================
-
-    /// <summary>
-    /// Updates the Animator based on current movement state
-    /// Uses a Blend Tree in Animator Controller for smooth idle→walk→run transitions
-    /// 
-    /// How it works:
-    /// - Reads how fast the character is moving horizontally
-    /// - Sets Animator float parameter ("Speed") accordingly
-    /// - Animator uses this to crossfade between idle/walk/run animations
-    /// 
-    /// Animation Smooth Time: Controls lerp speed between animation states
-    /// - Lower values (0.05): Snappy, responsive transitions
-    /// - Higher values (0.3): Smooth, fluid transitions
-    /// 
-    /// POTENTIAL ENHANCEMENT: Differentiate walk vs sprint animations
-    /// Currently sets same 1.0f for both walking and sprinting
-    /// Could check isSprinting to set different blend values:
-    ///   - Walking: SetFloat(hash, 0.5f, ...)  → Walk animation
-    ///   - Sprinting: SetFloat(hash, 1.0f, ...)  → Run animation
-    /// </summary>
-    void HandleAnimations()
-    {
-        // Calculate horizontal movement magnitude (ignore Y/gravity)
-        // magnitude = √(x² + z²) = length of movement vector
-        // Range when stationary: 0
-        // Range when moving full forward: ~1.0
-        // Range when moving diagonal full: ~1.414 (√2)
-        moveDirMagnitude = new Vector3(moveDirection.x, 0f, moveDirection.z).magnitude;
-
-        // Determine if player is moving (above small threshold)
-        // Threshold of 0.1 prevents jittery animations from tiny movements
-        // (e.g., controller stick drift, accidental key taps)
-        if (moveDirMagnitude > 0.1f && InputsManager.Instance.isSprinting)
-        {
-            // PLAYER IS MOVING
-            // Set animation blend parameter to 1.0 (full movement)
-            // The Animator's Blend Tree will show walk/run animation
-            //
-            // SetFloat parameters:
-            // 1. Hash (integer ID - fast!)
-            // 2. Target value (1.0 = moving)
-            // 3. DampTime (how fast to reach target - smoothTime)
-            // 4. DeltaTime (frame time for frame-rate independence)
-            characterAnimator.SetFloat(animationBlendHash, 1f, animationSmoothTime, Time.deltaTime);
-        }
-        else if(moveDirMagnitude > 0.1f && !InputsManager.Instance.isSprinting)
-        {
-            // PLAYER IS IDLE
-            // Set animation blend parameter to 0.0 (no movement)
-            // The Animator will show idle animation
-            characterAnimator.SetFloat(animationBlendHash, 0.5f, animationSmoothTime, Time.deltaTime);
-        }
-        else
-        {
-            characterAnimator.SetFloat(animationBlendHash, 0f, animationSmoothTime, Time.deltaTime);
-        }
     }
 
     // ==================================================================
