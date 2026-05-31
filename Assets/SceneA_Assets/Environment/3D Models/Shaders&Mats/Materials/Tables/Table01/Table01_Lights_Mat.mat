@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: LightsMat
+  m_Name: Table01_Lights_Mat
   m_Shader: {fileID: -6465566751694194690, guid: 5711f1ee1b8ba4e4ea9e95128da2d964, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
