@@ -14,8 +14,9 @@ public class ObjectDisabler : MonoBehaviour
 
         for (int i = 0; i < objectsSize; i++)
         {
-            if (!objects[i].activeInHierarchy)
+            if (!objects[i].activeInHierarchy || !objects[i])
             {
+                i++;
                 return;
             }
             else
