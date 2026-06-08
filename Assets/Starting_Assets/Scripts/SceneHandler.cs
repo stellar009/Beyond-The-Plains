@@ -28,6 +28,19 @@ public class SceneHandler : MonoBehaviour
     //Async variable to load the scene in background of the opened scene
     private AsyncOperation operation;
 
+    //Text used on the button
+    private TextMeshProUGUI btnText;
+
+    private void Start()
+    {
+        //Fetches the component from the children of the parent object
+        btnText = GetComponentInChildren<TextMeshProUGUI>();
+
+        if (btnText == null) return; //returns null value when the btnText not found 
+        else
+            btnText.enabled = true; //Ensures the text is enabled when the game starts
+    }
+
     /// <summary>
     /// PUBLIC method used to load the scene via other scipts to load the scene 
     /// </summary>
@@ -46,6 +59,9 @@ public class SceneHandler : MonoBehaviour
     {
         //Activate the loading screen 
         loadingScreen.SetActive(true);
+
+        //Deactivates the text when loading screen activates
+        btnText.enabled = false;
 
         //Fetches the slider component or loading bar from the loading screen
         loadingSlider = loadingScreen.GetComponentInChildren<Slider>();

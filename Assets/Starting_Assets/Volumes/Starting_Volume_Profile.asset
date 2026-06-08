@@ -46,7 +46,7 @@ MonoBehaviour:
     m_Value: 1
   focusDistance:
     m_OverrideState: 1
-    m_Value: 1.95
+    m_Value: 1
   aperture:
     m_OverrideState: 0
     m_Value: 5.6
@@ -120,10 +120,10 @@ MonoBehaviour:
     m_Value: 1
   threshold:
     m_OverrideState: 1
-    m_Value: 0.41
+    m_Value: 0.5
   intensity:
     m_OverrideState: 1
-    m_Value: 0.98
+    m_Value: 1
   scatter:
     m_OverrideState: 1
     m_Value: 1
@@ -138,7 +138,7 @@ MonoBehaviour:
     m_Value: 1
   filter:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 2
   downscale:
     m_OverrideState: 0
     m_Value: 0

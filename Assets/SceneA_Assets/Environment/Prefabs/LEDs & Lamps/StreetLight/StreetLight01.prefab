@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4421207731808141927}
   - component: {fileID: 4006535188099830784}
   - component: {fileID: 5566259034336940387}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ Light:
   serializedVersion: 13
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 3
+  m_Intensity: 5
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -149,15 +149,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 37441332f9207194486a33f90567b722, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.9094286
+      value: 16.2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 37441332f9207194486a33f90567b722, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.10000127
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 37441332f9207194486a33f90567b722, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.833119
+      value: 7.44
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 37441332f9207194486a33f90567b722, type: 3}
       propertyPath: m_LocalRotation.w
@@ -200,6 +200,10 @@ PrefabInstance:
       value: 3.84
       objectReference: {fileID: 0}
     - target: {fileID: -7795224439811220117, guid: 37441332f9207194486a33f90567b722, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -7795224439811220117, guid: 37441332f9207194486a33f90567b722, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
@@ -215,6 +219,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 8622a2e594535ab4c97b8c5860c15aa3, type: 2}
+    - target: {fileID: -3133498875991405556, guid: 37441332f9207194486a33f90567b722, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: -3133498875991405556, guid: 37441332f9207194486a33f90567b722, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
@@ -232,12 +240,24 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 8622a2e594535ab4c97b8c5860c15aa3, type: 2}
     - target: {fileID: -20053544970164111, guid: 37441332f9207194486a33f90567b722, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -20053544970164111, guid: 37441332f9207194486a33f90567b722, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 37441332f9207194486a33f90567b722, type: 3}
       propertyPath: m_Name
       value: StreetLight01
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 37441332f9207194486a33f90567b722, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 37441332f9207194486a33f90567b722, type: 3}
+      propertyPath: m_TagString
+      value: Lights
       objectReference: {fileID: 0}
     - target: {fileID: 3592342481408538646, guid: 37441332f9207194486a33f90567b722, type: 3}
       propertyPath: m_CastShadows

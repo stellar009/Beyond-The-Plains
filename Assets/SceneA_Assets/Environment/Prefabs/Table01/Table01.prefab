@@ -66,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3ced0525790d1a64aa1bc718fbb7bfdd, type: 2}
+  - {fileID: 2100000, guid: c33809495c705cd4884db5fa866189e9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -112,15 +112,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 05e3f3269c31f634783ab247f9bcaf66, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 05e3f3269c31f634783ab247f9bcaf66, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.537
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 05e3f3269c31f634783ab247f9bcaf66, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5
+      value: 6.8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 05e3f3269c31f634783ab247f9bcaf66, type: 3}
       propertyPath: m_LocalRotation.w
@@ -153,7 +153,7 @@ PrefabInstance:
     - target: {fileID: -2859109400176981367, guid: 05e3f3269c31f634783ab247f9bcaf66, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 728c35db837f1794ea7885b589d73d09, type: 2}
+      objectReference: {fileID: 2100000, guid: 2a373312a1a77f9418212cac593d44cd, type: 2}
     - target: {fileID: 919132149155446097, guid: 05e3f3269c31f634783ab247f9bcaf66, type: 3}
       propertyPath: m_Name
       value: Table01
@@ -165,7 +165,7 @@ PrefabInstance:
     - target: {fileID: 5401293172827366713, guid: 05e3f3269c31f634783ab247f9bcaf66, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 55aea473c7bdc3d45970701fc687e9b4, type: 2}
+      objectReference: {fileID: 2100000, guid: 3d6ef947f342fe249b9c42d4cb995e9e, type: 2}
     - target: {fileID: 9210189186843635962, guid: 05e3f3269c31f634783ab247f9bcaf66, type: 3}
       propertyPath: m_CastShadows
       value: 0
@@ -173,7 +173,7 @@ PrefabInstance:
     - target: {fileID: 9210189186843635962, guid: 05e3f3269c31f634783ab247f9bcaf66, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 3ced0525790d1a64aa1bc718fbb7bfdd, type: 2}
+      objectReference: {fileID: 2100000, guid: c33809495c705cd4884db5fa866189e9, type: 2}
     m_RemovedComponents:
     - {fileID: -8262974126933295829, guid: 05e3f3269c31f634783ab247f9bcaf66, type: 3}
     - {fileID: -5563078313170973721, guid: 05e3f3269c31f634783ab247f9bcaf66, type: 3}
