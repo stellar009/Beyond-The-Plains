@@ -322,7 +322,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2416145526455224799, guid: 3690b4d579e75b14bbcb200859ee63ba, type: 3}
       propertyPath: m_Name
-      value: StellarDendriteLab (1)
+      value: Shelter_Type_A_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3083856485905797989, guid: 3690b4d579e75b14bbcb200859ee63ba, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3083856485905797989, guid: 3690b4d579e75b14bbcb200859ee63ba, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3083856485905797989, guid: 3690b4d579e75b14bbcb200859ee63ba, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3083856485905797989, guid: 3690b4d579e75b14bbcb200859ee63ba, type: 3}
       propertyPath: m_LocalPosition.x
@@ -330,7 +342,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3083856485905797989, guid: 3690b4d579e75b14bbcb200859ee63ba, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3083856485905797989, guid: 3690b4d579e75b14bbcb200859ee63ba, type: 3}
       propertyPath: m_LocalPosition.z
@@ -555,7 +567,7 @@ GameObject:
   m_Component:
   - component: {fileID: 996407334}
   m_Layer: 0
-  m_Name: Lab
+  m_Name: Shelter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -578,37 +590,6 @@ Transform:
   - {fileID: 519803117}
   - {fileID: 2101555985}
   - {fileID: 1981944058}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1103243896
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1103243897}
-  m_Layer: 3
-  m_Name: Props
-  m_TagString: Props
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1103243897
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1103243896}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1559807824
@@ -863,7 +844,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2416145526455224799, guid: 3690b4d579e75b14bbcb200859ee63ba, type: 3}
       propertyPath: m_Name
-      value: StellarDendriteLab (3)
+      value: Shelter_Type_A_4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3083856485905797989, guid: 3690b4d579e75b14bbcb200859ee63ba, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3083856485905797989, guid: 3690b4d579e75b14bbcb200859ee63ba, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3083856485905797989, guid: 3690b4d579e75b14bbcb200859ee63ba, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3083856485905797989, guid: 3690b4d579e75b14bbcb200859ee63ba, type: 3}
       propertyPath: m_LocalPosition.x
@@ -871,7 +864,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3083856485905797989, guid: 3690b4d579e75b14bbcb200859ee63ba, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3083856485905797989, guid: 3690b4d579e75b14bbcb200859ee63ba, type: 3}
       propertyPath: m_LocalPosition.z
@@ -925,7 +918,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2416145526455224799, guid: 3690b4d579e75b14bbcb200859ee63ba, type: 3}
       propertyPath: m_Name
-      value: StellarDendriteLab (2)
+      value: Shelter_Type_A_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3083856485905797989, guid: 3690b4d579e75b14bbcb200859ee63ba, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3083856485905797989, guid: 3690b4d579e75b14bbcb200859ee63ba, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3083856485905797989, guid: 3690b4d579e75b14bbcb200859ee63ba, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3083856485905797989, guid: 3690b4d579e75b14bbcb200859ee63ba, type: 3}
       propertyPath: m_LocalPosition.x
@@ -933,7 +938,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3083856485905797989, guid: 3690b4d579e75b14bbcb200859ee63ba, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3083856485905797989, guid: 3690b4d579e75b14bbcb200859ee63ba, type: 3}
       propertyPath: m_LocalPosition.z
@@ -977,63 +982,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3083856485905797989, guid: 3690b4d579e75b14bbcb200859ee63ba, type: 3}
   m_PrefabInstance: {fileID: 2101555984}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &215233432356289779
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1153735049593431096, guid: 21ca74c3fb317604d9b0ca98c11dcd12, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1153735049593431096, guid: 21ca74c3fb317604d9b0ca98c11dcd12, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1153735049593431096, guid: 21ca74c3fb317604d9b0ca98c11dcd12, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -86.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1153735049593431096, guid: 21ca74c3fb317604d9b0ca98c11dcd12, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1153735049593431096, guid: 21ca74c3fb317604d9b0ca98c11dcd12, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1153735049593431096, guid: 21ca74c3fb317604d9b0ca98c11dcd12, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1153735049593431096, guid: 21ca74c3fb317604d9b0ca98c11dcd12, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1153735049593431096, guid: 21ca74c3fb317604d9b0ca98c11dcd12, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1153735049593431096, guid: 21ca74c3fb317604d9b0ca98c11dcd12, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1153735049593431096, guid: 21ca74c3fb317604d9b0ca98c11dcd12, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1966159090906267266, guid: 21ca74c3fb317604d9b0ca98c11dcd12, type: 3}
-      propertyPath: m_Name
-      value: Dome
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 21ca74c3fb317604d9b0ca98c11dcd12, type: 3}
 --- !u!1001 &5727256136669922035
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1044,7 +992,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2416145526455224799, guid: 3690b4d579e75b14bbcb200859ee63ba, type: 3}
       propertyPath: m_Name
-      value: StellarDendriteLab
+      value: Shelter_Type_A_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3083856485905797989, guid: 3690b4d579e75b14bbcb200859ee63ba, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3083856485905797989, guid: 3690b4d579e75b14bbcb200859ee63ba, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3083856485905797989, guid: 3690b4d579e75b14bbcb200859ee63ba, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3083856485905797989, guid: 3690b4d579e75b14bbcb200859ee63ba, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1052,7 +1012,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3083856485905797989, guid: 3690b4d579e75b14bbcb200859ee63ba, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3083856485905797989, guid: 3690b4d579e75b14bbcb200859ee63ba, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1100,6 +1060,4 @@ SceneRoots:
   - {fileID: 247145954}
   - {fileID: 1559807825}
   - {fileID: 1617775732}
-  - {fileID: 1103243897}
-  - {fileID: 215233432356289779}
   - {fileID: 996407334}
