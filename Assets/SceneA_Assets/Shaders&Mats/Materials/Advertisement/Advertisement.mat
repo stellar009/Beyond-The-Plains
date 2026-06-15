@@ -73,7 +73,7 @@ Material:
     - _Cull: 0
     - _DstBlend: 10
     - _DstBlendAlpha: 10
-    - _Intensity: 5
+    - _Intensity: 10
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 0
@@ -85,6 +85,6 @@ Material:
     - _ZWrite: 0
     - _ZWriteControl: 0
     m_Colors:
-    - _MainColor: {r: 1, g: 1, b: 1, a: 0.69803923}
+    - _MainColor: {r: 1, g: 1, b: 1, a: 0.45882353}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
