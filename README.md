@@ -7,4 +7,4 @@ Render Pipeline: URP
 
 
 
-Theme: Futuristic city / Day...
+Theme: Futuristic city / Day
