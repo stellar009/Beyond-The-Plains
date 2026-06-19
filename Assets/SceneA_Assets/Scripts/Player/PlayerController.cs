@@ -146,6 +146,9 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private float currentSpeed;
 
+    //Stores the default position of the player 
+    private Vector3 defaultPlayerPosition;
+
     // ==================================================================
     //                          INITIALIZATION
     // ==================================================================
@@ -193,10 +196,8 @@ public class PlayerController : MonoBehaviour
         // If already negative, keep it as-is
         gravity = (gravity > 0) ? -gravity : gravity;
 
-        // Example outputs:
-        // Input: 9.81   → Output: -9.81 ✓
-        // Input: -9.81  → Output: -9.81 ✓
-        // Input: 0      → Output: 0 (no gravity - will float!)
+        // Sets the vector 3 data without creating a new vector 3
+        defaultPlayerPosition.Set(0f, 1.1f, 0f);
     }
 
     // ==================================================================
@@ -212,6 +213,9 @@ public class PlayerController : MonoBehaviour
     {
         // Process movement input, camera-relative conversion, and physics
         HandleMovement();
+
+        // Resets the position of the player 
+        PositionReset(InputsManager.Instance.resetPosition);
     }
 
     // ==================================================================
@@ -357,6 +361,26 @@ public class PlayerController : MonoBehaviour
             //
             // This creates realistic parabolic fall trajectory!
             velocity.y += gravity * Time.deltaTime;
+        }
+    }
+
+    /// <summary>
+    /// Resets the postion of the player game object 
+    /// </summary>
+    /// <param name="input"></param>
+    void PositionReset(bool input)
+    {
+        //Perform action when the value is true
+        if (input)
+        {
+            //Turns off the CHARACTER CONTROLLER to prevent any weird behaviour
+            characterController.enabled = false;
+
+            //Sets the current postion to the default position
+            transform.position = defaultPlayerPosition;
+
+            //After change the position re-enable the CHARACTER CONTROLLER at new position
+            characterController.enabled = true;
         }
     }
 }

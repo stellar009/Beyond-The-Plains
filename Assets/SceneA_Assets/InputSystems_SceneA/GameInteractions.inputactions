@@ -52,7 +52,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Sample",
+                    "name": "PositionReset",
                     "type": "Button",
                     "id": "9e7eb24b-2ed1-4739-87dd-97f346b7121a",
                     "expectedControlType": "",
@@ -164,11 +164,11 @@
                 {
                     "name": "",
                     "id": "18728d69-b0a9-42bd-9925-d372cbd0f34f",
-                    "path": "<Keyboard>/l",
+                    "path": "<Keyboard>/p",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Sample",
+                    "action": "PositionReset",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

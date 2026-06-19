@@ -61,12 +61,20 @@ public class InputsManager : MonoBehaviour
     /// </summary>
     public bool changePerspective {  get; private set; }
 
+    /// <summary>
+    /// Player position reset boolean
+    /// Resets the position of player when button is pressed
+    /// </summary>
+    public bool resetPosition { get; private set; }
+
     // ==================== STATE VARIABLES ====================
     /// <summary>
     /// Tracks whether the game is currently paused
     /// When paused, movement and camera inputs are disabled
     /// </summary>
     private bool isPaused = false;
+
+    
 
     // ==================================================================
     //                          INITIALIZATION
@@ -151,6 +159,10 @@ public class InputsManager : MonoBehaviour
         // Subscribe to Sprint action (Left Shift Key)
         // Toggle-based: each press flips the state
         gameInteractions.Player.Sprint.performed += Sprint;
+
+        //========= RESET POSITION SUBSCRIPTION =========
+        // Subscribes to reset position action (P key)
+        gameInteractions.Player.PositionReset.performed += ResetPosition;
     }
 
     /// <summary>
@@ -181,6 +193,8 @@ public class InputsManager : MonoBehaviour
         gameInteractions.Player.Attacks.performed -= InAttackState;
 
         gameInteractions.Player.Sprint.performed -= Sprint;
+
+        gameInteractions.Player.PositionReset.performed -= ResetPosition;
     }
 
     // ==================================================================
@@ -282,6 +296,13 @@ public class InputsManager : MonoBehaviour
         isSprinting = !isSprinting;
     }
 
+    void ResetPosition(InputAction.CallbackContext ctx)
+    {
+        //Toggles the boolean 
+        resetPosition = !resetPosition;
+        Invoke(nameof(ResetPlayerPositionButtonState), 1f);
+    }
+
     // ==================================================================
     //                           UTILITY METHODS
     // ==================================================================
@@ -344,5 +365,10 @@ public class InputsManager : MonoBehaviour
         // CursorLockMode.None: Free movement, visible (for UI/menus)
         // CursorLockMode.Locked: Locked to center, hidden (for gameplay)
         Cursor.lockState = status ? CursorLockMode.None : CursorLockMode.Locked;
+    }
+
+    void ResetPlayerPositionButtonState()
+    {
+        resetPosition = !resetPosition;
     }
 }
