@@ -9,17 +9,17 @@ public class IntroPanelHandler : MonoBehaviour
     public float delay = 2f; //Global delay for all panels in the array 
 
     //cache memory for runtime optimization
-    private int panelSize = 0; //Max size of an array
-    private WaitForSeconds routineDelay; //Coroutine WaitForSeconds cache
+    private int m_PanelSize = 0; //Max size of an array
+    private WaitForSeconds m_RoutineDelay; //Coroutine WaitForSeconds cache
 
     //Runs first when the game starts
     private void Awake()
     {
         //sets the panel size when the game starts
-        panelSize = panels.Length;
+        m_PanelSize = panels.Length;
 
         //Loop through all panels and turns them off
-        for(int i = 0; i < panelSize; i++)
+        for(int i = 0; i < m_PanelSize; i++)
         {
             //turns off all panels in the array 
             panels[i].SetActive(false);
@@ -30,7 +30,7 @@ public class IntroPanelHandler : MonoBehaviour
     private void Start()
     {
         //Caches the WaitForSeconds 
-        routineDelay = new WaitForSeconds(delay);
+        m_RoutineDelay = new WaitForSeconds(delay);
 
         //Starts the coroutine
         StartCoroutine(PanelRoutine());
@@ -43,16 +43,16 @@ public class IntroPanelHandler : MonoBehaviour
     IEnumerator PanelRoutine()
     {
         //loops throught all array elements 
-        for(int i = 0;i < panelSize;i++)
+        for(int i = 0;i < m_PanelSize;i++)
         {
             //Activates the panels 
             panels[i].SetActive(true);
 
             //Delay for routine the next part runs when the delay is completed
-            yield return routineDelay;
+            yield return m_RoutineDelay;
 
             //Checks if the panel is active 
-            if (panels[i].active)
+            if (panels[i].activeInHierarchy)
             {
                 //If panel is active disable it
                 panels[i].SetActive (false);

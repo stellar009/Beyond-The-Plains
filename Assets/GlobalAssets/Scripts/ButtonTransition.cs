@@ -17,12 +17,12 @@ public class ButtonTransition : MonoBehaviour, IPointerEnterHandler, IPointerExi
     /// <summary>
     /// Hash value to create a unique integer to handle animations
     /// </summary>
-    private int hoverAnimationHash;
+    private int m_HoverAnimationHash;
 
     void Start()
     {
         //Converts string into unique Hash number
-        hoverAnimationHash = Animator.StringToHash(hoverAnimationName);
+        m_HoverAnimationHash = Animator.StringToHash(hoverAnimationName);
 
         //Fetches animator component from the game object
         m_Animator = GetComponent<Animator>();
@@ -39,7 +39,7 @@ public class ButtonTransition : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public void OnPointerEnter(PointerEventData eventData)
     {
         //Sets the animation boolen TRUE to switch between animation states
-        m_Animator.SetBool(hoverAnimationHash, true);
+        m_Animator.SetBool(m_HoverAnimationHash, true);
     }
 
     /// <summary>
@@ -50,6 +50,6 @@ public class ButtonTransition : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public void OnPointerExit(PointerEventData eventData)
     {
         //Sets the animation boolen FALSE to switch between animation states
-        m_Animator.SetBool(hoverAnimationHash, false);
+        m_Animator.SetBool(m_HoverAnimationHash, false);
     }
 }

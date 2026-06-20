@@ -2,7 +2,6 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class SceneHandler : MonoBehaviour
 {
@@ -14,22 +13,22 @@ public class SceneHandler : MonoBehaviour
     //Cache memory or variables
 
     //Addition variable to store game time when the game runs
-    private float timer;
+    private float m_Timer;
 
     //Async variable to load the scene in background of the opened scene
-    private AsyncOperation operation;
+    private AsyncOperation m_Operation;
 
     //Text used on the button
-    private TextMeshProUGUI btnText;
+    private TextMeshProUGUI m_BtnText;
 
     private void Start()
     {
         //Fetches the component from the children of the parent object
-        btnText = GetComponentInChildren<TextMeshProUGUI>();
+        m_BtnText = GetComponentInChildren<TextMeshProUGUI>();
 
-        if (btnText == null) return; //returns null value when the btnText not found 
+        if (m_BtnText == null) return; //returns null value when the btnText not found 
         else
-            btnText.enabled = true; //Ensures the text is enabled when the game starts
+            m_BtnText.enabled = true; //Ensures the text is enabled when the game starts
     }
 
     /// <summary>
@@ -61,25 +60,25 @@ public class SceneHandler : MonoBehaviour
     IEnumerator LoadScene(string sceneName)
     {
         //Default timer to store game time
-        timer = 0f;
+        m_Timer = 0f;
 
         //Starts Loading the scene in background 
-        operation = SceneManager.LoadSceneAsync(sceneName);
+        m_Operation = SceneManager.LoadSceneAsync(sceneName);
 
         //Disables to open the scene when it loaded 
-        operation.allowSceneActivation = false;
+        m_Operation.allowSceneActivation = false;
 
         while(true)
         {
             //Stores the time when the game runs
-            timer += Time.deltaTime;
+            m_Timer += Time.deltaTime;
 
             //Checks the progress is completed more than 90% 
             //Checks the timer is greater than the minimum loading time to load a scene
-            if(operation.progress >= 0.9f && timer > minLoadTimer)
+            if(m_Operation.progress >= 0.9f && m_Timer > minLoadTimer)
             {
                 //Allows the scene to open or activate from the RAM or GPU memory
-                operation.allowSceneActivation = true;
+                m_Operation.allowSceneActivation = true;
 
                 //Breaks the condition
                 yield break;

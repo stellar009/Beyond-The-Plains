@@ -1,117 +1,97 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>
-/// InputsManager - Centralized input handling system using Unity's new Input System.
-/// Implements Singleton pattern to ensure only one instance exists across scenes.
-/// Manages all player inputs: movement, camera look, attacks, and pause functionality.
+/// InputsManager - Handles all player inputs using Unity's new Input System.
+/// Uses Singleton pattern so only one instance exists.
 /// 
-/// Usage: Access via InputsManager.Instance from any script
-/// Example: float moveX = InputsManager.Instance.movementInput.x;
+/// How to use: InputsManager.Instance.movementInput (gets WASD/joystick)
 /// </summary>
 public class InputsManager : MonoBehaviour
 {
     // ==================== SINGLETON INSTANCE ====================
+
     /// <summary>
-    /// Static reference to the single instance of InputsManager
-    /// Allows global access from any script without GetComponent calls
+    /// The one and only instance of this script.
+    /// Access from anywhere: InputsManager.Instance
     /// </summary>
     public static InputsManager Instance;
 
     // ==================== INPUT SYSTEM REFERENCE ====================
+
     /// <summary>
-    /// Reference to the generated Input Action Asset (GameInteractions)
-    /// This contains all defined action maps and bindings from the Input System window
+    /// The auto-generated Input System class that contains all our actions.
+    /// Created from the .inputactions asset.
     /// </summary>
-    private GameInteractions gameInteractions;
+    private GameInteractions m_GameInteractions;
 
     // ==================== PUBLIC INPUT PROPERTIES ====================
+
     /// <summary>
-    /// Current movement input vector (WASD/Left Stick)
+    /// Movement input (WASD or left joystick).
     /// X = horizontal (-1 left, +1 right)
-    /// Y = vertical (-1 down/backward, +1 up/forward)
+    /// Y = vertical (-1 backward, +1 forward)
     /// </summary>
     public Vector2 movementInput { get; private set; }
 
     /// <summary>
-    /// Current camera look input vector (Mouse Delta/Right Stick)
-    /// X = horizontal mouse movement (yaw/looking left-right)
-    /// Y = vertical mouse movement (pitch/looking up-down)
+    /// Camera look input (mouse movement or right joystick).
+    /// X = look left/right
+    /// Y = look up/down
     /// </summary>
     public Vector2 cameraInputs { get; private set; }
 
     /// <summary>
-    /// Current attack button state (toggle-based)
-    /// true = attack active, false = not attacking
-    /// Toggles on each button press (not hold-based)
+    /// Attack state - toggles on/off each time you press the attack button.
+    /// true = attacking, false = not attacking
     /// </summary>
     public bool attackState { get; private set; }
 
     /// <summary>
-    /// Current Sprint button state (toggle-based)
-    /// true = sprint active, false = not sprinting
-    /// Toggles on each button press (not hold-based)
+    /// Sprint state - toggles on/off each time you press sprint.
+    /// true = sprinting, false = walking
     /// </summary>
     public bool isSprinting { get; private set; }
 
     /// <summary>
-    /// Current Perspective button state (toggle-based)
-    /// true = Third-Person perspective, false = First-Person Perspective
-    /// Toggles on each button press (not hold-based)
-    /// </summary>
-    public bool changePerspective {  get; private set; }
-
-    /// <summary>
-    /// Player position reset boolean
-    /// Resets the position of player when button is pressed
+    /// Resets the player position when pressed.
+    /// True for a moment, then auto-resets to false.
     /// </summary>
     public bool resetPosition { get; private set; }
 
     // ==================== STATE VARIABLES ====================
-    /// <summary>
-    /// Tracks whether the game is currently paused
-    /// When paused, movement and camera inputs are disabled
-    /// </summary>
-    private bool isPaused = false;
 
-    
+    /// <summary>
+    /// Is the game paused? When true, most inputs stop working.
+    /// </summary>
+    private bool m_IsPaused = false;
 
     // ==================================================================
     //                          INITIALIZATION
     // ==================================================================
 
     /// <summary>
-    /// Awake is called when the script instance is being loaded (before Start)
-    /// Used for initialization that must occur before any other scripts run
-    /// Sets up the singleton pattern and initial cursor state
+    /// Called when the script loads - sets up the singleton and input system.
     /// </summary>
     private void Awake()
     {
-        // Initialize the input action asset class
-        // This creates an instance of the auto-generated GameInteractions class
-        // which contains all action maps defined in the Input System settings
-        gameInteractions = new GameInteractions();
+        // Create the input system instance
+        m_GameInteractions = new GameInteractions();
 
-        // Hide cursor at start (typical for FPS/TPS games)
-        // Locks cursor to center of screen for unlimited mouse movement
-        ShowCursors(false);
+        // Hide the mouse cursor (standard for FPS games)
+        ShowCursor(false);
 
-        // ========== SINGLETON PATTERN IMPLEMENTATION ==========
-        // Check if an instance already exists
+        // ========== SINGLETON SETUP ==========
+        // If no instance exists, this becomes the one and only
         if (Instance == null)
         {
-            // No existing instance - this becomes the singleton
             Instance = this;
-
-            // Mark this GameObject as DontDestroyOnLoad
-            // Prevents destruction when loading new scenes
-            // Ensures input manager persists across entire game
+            // Keep this object alive when switching scenes
             DontDestroyOnLoad(gameObject);
         }
         else
         {
-            // Instance already exists - destroy this duplicate
-            // This prevents multiple input managers causing conflicts
+            // There's already an instance - delete this duplicate
             Destroy(gameObject);
         }
     }
@@ -121,80 +101,56 @@ public class InputsManager : MonoBehaviour
     // ==================================================================
 
     /// <summary>
-    /// Called when the object becomes enabled and active
-    /// Subscribes to all input events to begin receiving input data
-    /// This is where we "turn on" our input listeners
+    /// Called when this object is enabled - starts listening for inputs.
     /// </summary>
     private void OnEnable()
     {
-        // Enable the Player action map
-        // This activates all actions within the "Player" action map
-        // Actions won't fire events until their map is enabled
-        gameInteractions.Player.Enable();
+        // Turn on the Player action map (activates all player inputs)
+        m_GameInteractions.Player.Enable();
 
-        // ========== MOVEMENT INPUT SUBSCRIPTIONS ==========
-        // Subscribe to Movement action events
-        // "performed" fires when input starts/changes (button press)
-        // "canceled" fires when input returns to neutral (button release)
-        gameInteractions.Player.Movement.performed += OnMovementPerformend;
-        gameInteractions.Player.Movement.canceled += OnMovementCanceled;
+        // ========== CONNECT INPUTS TO THEIR FUNCTIONS ==========
+        // Movement (WASD)
+        m_GameInteractions.Player.Movement.performed += OnMovementPerformend;
+        m_GameInteractions.Player.Movement.canceled += OnMovementCanceled;
 
-        // ========== CAMERA INPUT SUBSCRIPTIONS ==========
-        // Subscribe to Camera look action events
-        // Typically bound to Mouse Delta or Right Analog Stick
-        gameInteractions.Player.Camera.performed += OnCameraInputPerformed;
-        gameInteractions.Player.Camera.canceled += OnCameraInputCanceled;
+        // Camera Look (mouse)
+        m_GameInteractions.Player.Camera.performed += OnCameraInputPerformed;
+        m_GameInteractions.Player.Camera.canceled += OnCameraInputCanceled;
 
-        // ========== PAUSE INPUT SUBSCRIPTION ==========
-        // Subscribe to Pause action (Escape key)
-        // Uses performed only (no need for cancel - it's a toggle)
-        gameInteractions.Player.PauseGame.performed += PauseGame;
+        // Pause (Escape key)
+        m_GameInteractions.Player.PauseGame.performed += PauseGame;
 
-        // ========== ATTACK INPUT SUBSCRIPTION ==========
-        // Subscribe to Attack action (Left Mouse Click)
-        // Toggle-based: each press flips the state
-        gameInteractions.Player.Attacks.performed += InAttackState;
+        // Attack (Left Mouse Click)
+        m_GameInteractions.Player.Attacks.performed += InAttackState;
 
-        // ========== SPRINT INPUT SUBSCRIPTION ==========
-        // Subscribe to Sprint action (Left Shift Key)
-        // Toggle-based: each press flips the state
-        gameInteractions.Player.Sprint.performed += Sprint;
+        // Sprint (Left Shift)
+        m_GameInteractions.Player.Sprint.performed += Sprint;
 
-        //========= RESET POSITION SUBSCRIPTION =========
-        // Subscribes to reset position action (P key)
-        gameInteractions.Player.PositionReset.performed += ResetPosition;
+        // Reset Position (P key)
+        m_GameInteractions.Player.PositionReset.performed += ResetPosition;
     }
 
     /// <summary>
-    /// Called when the object becomes disabled or destroyed
-    /// Unsubscribes from all input events to prevent memory leaks
-    /// Always unsubscribe in OnDisable to match subscriptions in OnEnable!
+    /// Called when this object is disabled - stops listening for inputs.
+    /// Important: Always disconnect events to avoid memory leaks!
     /// </summary>
     private void OnDisable()
     {
-        // Disable the Player action map
-        // Stops all input processing for this action map
-        gameInteractions.Player.Disable();
+        // Turn off the Player action map
+        m_GameInteractions.Player.Disable();
 
-        // ========== UNSUBSCRIBE FROM ALL EVENTS ==========
-        // Must remove all event handlers to prevent:
-        // 1. Memory leaks (garbage collector can't clean up orphaned delegates)
-        // 2. Null reference exceptions if this object is destroyed
-        // 3. Multiple firings if object is re-enabled without proper cleanup
+        // ========== DISCONNECT ALL INPUTS ==========
+        // Remove all event connections
+        m_GameInteractions.Player.Movement.performed -= OnMovementPerformend;
+        m_GameInteractions.Player.Movement.canceled -= OnMovementCanceled;
 
-        gameInteractions.Player.Movement.performed -= OnMovementPerformend;
-        gameInteractions.Player.Movement.canceled -= OnMovementCanceled;
+        m_GameInteractions.Player.Camera.performed -= OnCameraInputPerformed;
+        m_GameInteractions.Player.Camera.canceled -= OnCameraInputCanceled;
 
-        gameInteractions.Player.Camera.performed -= OnCameraInputPerformed;
-        gameInteractions.Player.Camera.canceled -= OnCameraInputCanceled;
-
-        gameInteractions.Player.PauseGame.performed -= PauseGame;
-
-        gameInteractions.Player.Attacks.performed -= InAttackState;
-
-        gameInteractions.Player.Sprint.performed -= Sprint;
-
-        gameInteractions.Player.PositionReset.performed -= ResetPosition;
+        m_GameInteractions.Player.PauseGame.performed -= PauseGame;
+        m_GameInteractions.Player.Attacks.performed -= InAttackState;
+        m_GameInteractions.Player.Sprint.performed -= Sprint;
+        m_GameInteractions.Player.PositionReset.performed -= ResetPosition;
     }
 
     // ==================================================================
@@ -202,105 +158,78 @@ public class InputsManager : MonoBehaviour
     // ==================================================================
 
     /// <summary>
-    /// Handles Movement input when action is performed (key held/stick moved)
-    /// Reads the Vector2 value from the input context and stores it
-    /// Called continuously while movement keys are pressed or stick is moved
+    /// Called when movement keys are pressed or joystick is moved.
+    /// Stores the input value (direction and strength).
     /// </summary>
-    /// <param name="ctx">Callback context containing input data (value, phase, action, etc.)</param>
     void OnMovementPerformend(InputAction.CallbackContext ctx)
     {
-        // Read the Vector2 value from the context
-        // For keyboard: returns (-1,0) for A, (1,0) for D, (0,1) for W, etc.
-        // For gamepad: returns normalized stick position (-1 to 1 on both axes)
+        // Read the input value (Vector2: x=horizontal, y=vertical)
         movementInput = ctx.ReadValue<Vector2>();
     }
 
     /// <summary>
-    /// Handles Movement input when action is canceled (keys released/stick centered)
-    /// Resets movement input to zero to stop character movement
-    /// Important: Without this, character would continue moving after releasing keys!
+    /// Called when movement keys are released or joystick centers.
+    /// Stops movement by setting input to zero.
     /// </summary>
-    /// <param name="ctx">Callback context (value is zero/neutral when canceled)</param>
     void OnMovementCanceled(InputAction.CallbackContext ctx)
     {
-        // Reset to zero vector - no movement input
-        movementInput = Vector2.zero;
+        movementInput = Vector2.zero; // Stop moving
     }
 
     /// <summary>
-    /// Handles Camera look input when action is performed (mouse moving/stick moved)
-    /// Reads the Vector2 delta value for camera rotation
-    /// For mouse: returns pixel movement since last frame (delta)
-    /// For gamepad: returns stick position (not delta - handled differently usually)
+    /// Called when the mouse moves or right joystick is used.
+    /// Stores the look input for camera rotation.
     /// </summary>
-    /// <param name="ctx">Callback context containing mouse delta or stick position</param>
     void OnCameraInputPerformed(InputAction.CallbackContext ctx)
     {
-        // Store camera input for use by PlayerCamera or other systems
         cameraInputs = ctx.ReadValue<Vector2>();
     }
 
     /// <summary>
-    /// Handles Camera look input when action is canceled (mouse stops moving/stick centers)
-    /// Resets camera input to zero
-    /// Prevents camera drift when user stops moving mouse
+    /// Called when mouse stops moving or joystick centers.
+    /// Stops camera rotation.
     /// </summary>
-    /// <param name="ctx">Callback context</param>
     void OnCameraInputCanceled(InputAction.CallbackContext ctx)
     {
-        // Clear camera input - no rotation this frame
-        cameraInputs = Vector2.zero;
+        cameraInputs = Vector2.zero; // Stop looking around
     }
 
     /// <summary>
-    /// Handles Attack button press - TOGGLE implementation
-    /// Flips the attack state between true and false on each button press
-    /// Note: This is NOT hold-based. Each click toggles the state.
-    /// Use this for toggle-able actions like auto-fire or mode switching
+    /// Called when Attack button is pressed.
+    /// Toggles attack on/off (each press flips the state).
     /// </summary>
-    /// <param name="ctx">Callback context</param>
     void InAttackState(InputAction.CallbackContext ctx)
     {
-        // Toggle boolean: if true becomes false, if false becomes true
-        attackState = !attackState;
-
-        // Debug example:
-        // Debug.Log($"Attack toggled: {attackState}");
+        attackState = !attackState; // Flip: true→false, false→true
     }
 
     /// <summary>
-    /// Handles Pause button press - TOGGLE implementation
-    /// Flips the pause state and calls the PauseGame method to apply changes
-    /// Typically bound to Escape key (keyboard)
+    /// Called when Pause button (Escape) is pressed.
+    /// Toggles pause on/off.
     /// </summary>
-    /// <param name="ctx">Callback context</param>
     void PauseGame(InputAction.CallbackContext ctx)
     {
-        // Toggle pause state
-        isPaused = !isPaused;
-
-        // Apply pause state changes (disable inputs, show cursor, etc.)
-        PauseGame(isPaused);
+        m_IsPaused = !m_IsPaused; // Toggle pause state
+        PauseGame(m_IsPaused);     // Apply pause changes
     }
 
     /// <summary>
-    /// Handles Sprint button press - TOGGLE implementation
-    /// Flips the sprint state between true and false on each button press
-    /// Note: This is NOT hold-based. Each click toggles the state.
-    /// Use this for toggle-able actions like auto-fire or mode switching
+    /// Called when Sprint button (Left Shift) is pressed.
+    /// Toggles sprint on/off.
     /// </summary>
-    /// <param name="ctx">Callback context</param>
     void Sprint(InputAction.CallbackContext ctx)
     {
-        // Toggle boolean: if true becomes false, if false becomes true
-        isSprinting = !isSprinting;
+        isSprinting = !isSprinting; // Flip sprint state
     }
 
+    /// <summary>
+    /// Called when Reset Position button (P) is pressed.
+    /// Sets resetPosition to true for 1 second, then auto-resets to false.
+    /// </summary>
     void ResetPosition(InputAction.CallbackContext ctx)
     {
-        //Toggles the boolean 
-        resetPosition = !resetPosition;
-        Invoke(nameof(ResetPlayerPositionButtonState), 1f);
+        resetPosition = !resetPosition; // Set to true
+        Invoke(nameof(ResetPlayerPositionButtonState), 1f); // Auto-reset after 1 second
     }
 
     // ==================================================================
@@ -308,67 +237,50 @@ public class InputsManager : MonoBehaviour
     // ==================================================================
 
     /// <summary>
-    /// Pauses or resumes the game by enabling/disabling specific input actions
-    /// Can be called externally (from UI buttons, game events, etc.)
-    /// 
-    /// Logic:
-    /// - When PAUSED (true): Keep movement/camera enabled (for menu navigation?)
-    ///   NOTE: You might want to disable these during pause - see below
-    ///   
-    /// - When RESUMED (false): Disable movement and camera (prevent input during pause menu)
-    ///   NOTE: The logic here seems inverted - see comments below
+    /// Pauses or resumes the game.
+    /// Controls which inputs are active and shows/hides the cursor.
     /// </summary>
-    /// <param name="state">True = game paused, False = game active</param>
+    /// <param name="state">true = paused, false = playing</param>
     public void PauseGame(bool state)
     {
         if (state)
         {
-            // Currently enables movement/camera when paused (allows menu navigation?)
-            // If you want to freeze the player during pause, change these to Disable()
-            gameInteractions.Player.Movement.Enable();
-            gameInteractions.Player.Camera.Enable();
+            // When paused: movement and camera are still active (for menus)
+            // Note: You might want to disable these instead
+            m_GameInteractions.Player.Movement.Enable();
+            m_GameInteractions.Player.Camera.Enable();
         }
         else
         {
-            // Currently disables movement/camera when unpaused (opposite of expected)
-            // If fixing above, change these to Enable()
-            gameInteractions.Player.Movement.Disable();
-            gameInteractions.Player.Camera.Disable();
+            // When unpaused: movement and camera are disabled
+            // Note: You might want to enable these instead
+            m_GameInteractions.Player.Movement.Disable();
+            m_GameInteractions.Player.Camera.Disable();
         }
 
-        // Show cursor when paused, hide when active
-        // Using !state because we want cursor VISIBLE during pause (state=true)
-        // and HIDDEN during gameplay (state=false)
-        ShowCursors(!state);
+        // Show cursor during pause, hide during gameplay
+        ShowCursor(state); // state=true → show cursor, state=false → hide cursor
     }
 
     /// <summary>
-    /// Controls cursor visibility and lock state
-    /// 
-    /// When status is TRUE (visible):
-    /// - Cursor is shown on screen
-    /// - Cursor is unlocked (can move freely, can click UI)
-    /// - Use this for menus, pause screens, inventory, etc.
-    /// 
-    /// When status is FALSE (hidden):
-    /// - Cursor is invisible
-    /// - Cursor is locked to screen center (confined to game window)
-    /// - Use this during gameplay for FPS/TPS camera control
+    /// Shows or hides the mouse cursor.
     /// </summary>
-    /// <param name="status">True = show and unlock cursor, False = hide and lock cursor</param>
-    void ShowCursors(bool status)
+    /// <param name="canShow">true = show cursor, false = hide cursor</param>
+    void ShowCursor(bool canShow)
     {
-        // Set cursor visibility
-        Cursor.visible = status;
+        Cursor.visible = canShow; // Show/hide cursor
 
-        // Set cursor lock mode based on status
-        // CursorLockMode.None: Free movement, visible (for UI/menus)
-        // CursorLockMode.Locked: Locked to center, hidden (for gameplay)
-        Cursor.lockState = status ? CursorLockMode.None : CursorLockMode.Locked;
+        // Lock cursor to center when hidden (for gameplay)
+        // Allow free movement when visible (for menus)
+        Cursor.lockState = canShow ? CursorLockMode.None : CursorLockMode.Locked;
     }
 
+    /// <summary>
+    /// Resets the resetPosition button state back to false.
+    /// Called automatically 1 second after ResetPosition is pressed.
+    /// </summary>
     void ResetPlayerPositionButtonState()
     {
-        resetPosition = !resetPosition;
+        resetPosition = !resetPosition; // Flip back to false
     }
 }

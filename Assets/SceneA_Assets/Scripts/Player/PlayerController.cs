@@ -1,203 +1,149 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// PlayerController - Handles player movement, physics, and animations.
-/// Uses CharacterController for collision-based movement (not Rigidbody).
-/// Implements camera-relative movement (moves relative to camera direction, not world axes).
+/// PlayerController - Moves the player and handles animations.
+/// Uses CharacterController (not Rigidbody) for movement.
+/// Moves relative to where the camera is looking.
 /// 
-/// Components Required:
-/// - CharacterController (on same GameObject)
-/// - Animator (on child GameObject - typically the mesh/armature)
-/// - Main Camera (tagged as "MainCamera" in scene)
+/// Needs these on the player:
+/// - CharacterController
+/// - A camera tagged "MainCamera" in the scene
 /// 
-/// Dependencies:
-/// - InputsManager (singleton) for reading movement input
+/// Uses InputsManager to get keyboard/controller input.
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
     // ==================== COMPONENT REFERENCES ====================
 
     /// <summary>
-    /// Unity's built-in character controller component
-    /// Handles collision detection, ground checking, and slope handling
-    /// Unlike Rigidbody, this is kinematic (no physics forces, just direct movement)
+    /// The CharacterController handles collision and ground detection.
+    /// It moves the player without using physics forces.
     /// </summary>
-    private CharacterController characterController;
+    private CharacterController m_CharacterController;
 
     /// <summary>
-    /// Reference to the main camera (used for camera-relative movement)
-    /// Camera direction determines which way "forward" is for the player
+    /// The main camera - used to figure out which direction is "forward" on screen.
     /// </summary>
-    private Camera mainCam;
+    private Camera m_MainCamera;
 
     // ==================== INSPECTOR SETTINGS ====================
 
     [Header("Player Settings")]
-    [Tooltip("Base movement speed in units per second")]
-    public float speed = 2f;
+    [Tooltip("How fast the player walks (units per second)")]
+    [SerializeField] private float m_Speed = 2f;
 
     [Header("Gravity Settings")]
-    [Tooltip("Gravity strength. Can enter as positive value (9.81) and it will be inverted automatically")]
+    [Tooltip("How strong gravity is. 9.81 = normal Earth gravity")]
 
     /// <summary>
-    /// [Range Attribute] - Creates a slider in the Unity Inspector
-    /// Restricts gravity value between 5f (minimum) and 20f (maximum)
-    /// Prevents unrealistic values like 0.1f (moon walking) or 100f (instant drop)
-    /// 
-    /// Visual: Shows as a draggable slider instead of text field
-    /// Usage: Drag slider or click value to type manually within range
-    /// 
-    /// Recommended values:
-    /// - 9.81f: Realistic Earth gravity (default)
-    /// - 5f-8f: Low gravity (sci-fi/moon-like feel)
-    /// - 15f-20f: Heavy gravity (ground pound feel)
+    /// [Range] makes a slider in the Inspector - values between 5 and 20.
+    /// Lower = floaty, higher = heavy.
     /// </summary>
-    [Range(5f, 20f)] public float gravity = 9.81f;
+    [Range(5f, 20f)] [SerializeField] private float m_Gravity = 9.81f;
 
     [Header("Sprint Settings")]
 
     /// <summary>
-    /// Speed multiplier applied when sprinting is active
-    /// Final sprint speed = base speed × sprintMultiplier
-    /// Example: speed=2f, sprintMultiplier=2f → Sprint speed = 4f (2× faster)
-    /// 
-    /// Common values:
-    /// - 1.5f: Slight speed boost (realistic jog)
-    /// - 2.0f: Standard sprint (typical FPS games)
-    /// - 2.5f-3.0f: Fast sprint (arcade/hero games)
-    /// 
-    /// Controlled by InputsManager.isSprinting toggle state
+    /// How much faster sprinting is compared to walking.
+    /// Example: speed=2, multiplier=2 → sprint speed = 4.
     /// </summary>
-    [Tooltip("Multiplier to increase speed when player is sprinting")]
-    public float sprintMultiplier = 2f;
+    [Tooltip("Multiplier for sprint speed (2 = twice as fast)")]
+    [SerializeField] private float m_SprintMultiplier = 2f;
 
-    // ==================== MOVEMENT VECTORS ====================
+    // ==================== MOVEMENT VARIABLES ====================
 
     /// <summary>
-    /// Current velocity vector used for movement calculation
-    /// x = horizontal input (left/right)
-    /// y = vertical velocity (gravity/falling)
-    /// z = vertical input (forward/backward)
+    /// Current velocity (direction + speed).
+    /// X = left/right, Y = up/down (gravity), Z = forward/backward.
     /// </summary>
-    private Vector3 velocity;
+    private Vector3 m_Velocity;
 
     /// <summary>
-    /// Final movement direction after converting to camera-relative space
-    /// This is the actual direction the character will move in world space
+    /// The direction the player will move, relative to the camera.
     /// </summary>
-    private Vector3 moveDirection;
+    private Vector3 m_MoveDirection;
 
     /// <summary>
-    /// Combined final movement vector sent to CharacterController.Move()
-    /// Contains: camera-relative X/Z movement + gravity Y velocity
+    /// The final movement vector sent to CharacterController.Move().
+    /// Combines horizontal movement + vertical gravity.
     /// </summary>
-    private Vector3 finalMovement;
+    private Vector3 m_FinalMovement;
 
     /// <summary>
-    /// Camera's forward direction (flattened to XZ plane, normalized)
-    /// Used to determine where "forward" is relative to camera
+    /// Camera's forward direction (flattened so it's horizontal).
     /// </summary>
-    private Vector3 mainCamForward;
+    private Vector3 m_MainCamForward;
 
     /// <summary>
-    /// Camera's right direction (flattened to XZ plane, normalized)
-    /// Used to determine where "right" is relative to camera
+    /// Camera's right direction (flattened so it's horizontal).
     /// </summary>
-    private Vector3 mainCamRight;
+    private Vector3 m_MainCamRight;
 
-    // ==================== CONFIGURATION VALUES ====================
+    // ==================== DEFAULT VALUES ====================
 
     /// <summary>
-    /// Fallback default speed if inspector value is invalid (<= 0)
+    /// Fallback speed if inspector value is invalid (0 or negative).
     /// </summary>
-    private float defaultSpeed = 2f;
+    private float k_DefaultSpeed = 2f;
 
     /// <summary>
-    /// Fallback default sprint multiplier if inspector value is invalid (<= 0)
-    /// Used in Awake() to validate sprintMultiplier from Inspector
-    /// Ensures sprint always works even if user enters bad value
+    /// Fallback sprint multiplier if inspector value is invalid.
     /// </summary>
-    private float defaultSprintMultiplier = 2f;
+    private float k_DefaultSprintMultiplier = 2f;
 
     /// <summary>
-    /// Small downward force applied when grounded
-    /// Keeps character snapped to ground (prevents floating/bouncing)
-    /// Negative value applies constant slight downward pressure
+    /// Small downward force applied when grounded - keeps the player stuck to the floor.
     /// </summary>
-    private float defaultGravity = -2f;
+    private float k_DefaultGravity = -2f;
 
     /// <summary>
-    /// Magnitude (length) of the horizontal movement direction
-    /// Used to determine if player is moving for animation purposes
-    /// Range: 0 (idle) to ~1.414 (moving diagonally at full input)
+    /// Current speed - changes between walk speed and sprint speed.
     /// </summary>
-    private float moveDirMagnitude;
+    private float m_CurrentSpeed;
 
     /// <summary>
-    /// Dynamic speed value that changes based on sprint state
-    /// Updated every frame in HandleMovement()
-    /// 
-    /// Values:
-    /// - When NOT sprinting: currentSpeed = speed (base walk speed)
-    /// - When sprinting: currentSpeed = speed × sprintMultiplier (boosted speed)
-    /// 
-    /// Used in final calculation: characterController.Move(finalMovement * currentSpeed * Time.deltaTime)
-    /// Separating this allows easy expansion (crouch speed, slow-walk, etc.)
+    /// Where the player starts - used for resetting position.
     /// </summary>
-    private float currentSpeed;
-
-    //Stores the default position of the player 
-    private Vector3 defaultPlayerPosition;
+    private Vector3 k_DefaultPlayerPosition;
 
     // ==================================================================
     //                          INITIALIZATION
     // ==================================================================
 
     /// <summary>
-    /// Awake is called when the script instance is first loaded
-    /// Used to get references to required components before any Start() methods run
-    /// This ensures components are available even if other scripts need them in Start()
+    /// Called when the script first loads - gets all required components.
     /// </summary>
     private void Awake()
     {
-        // Get CharacterController from this GameObject
-        // Required for collision-based movement
-        characterController = GetComponent<CharacterController>();
-        if (!characterController) Debug.LogError("No CharacterController found on Player!");
+        // Get the CharacterController component from this GameObject
+        m_CharacterController = GetComponent<CharacterController>();
+        if (!m_CharacterController) Debug.LogError("No CharacterController found on Player!");
 
-        // Get main camera using Unity's tag system
-        // Camera.main finds the camera tagged "MainCamera" in the scene
-        mainCam = Camera.main;
-        if (!mainCam) Debug.LogError("No Main Camera found! Tag a camera as 'MainCamera'");
+        // Find the main camera by its tag
+        m_MainCamera = Camera.main;
+        if (!m_MainCamera) Debug.LogError("No Main Camera found! Tag a camera as 'MainCamera'");
 
-        // Validate sprint multiplier - ensure it's positive and functional
-        // If user enters 0 or negative in inspector, use default (2f)
-        // This prevents sprint from being disabled or causing reverse-speed bugs
-        if (sprintMultiplier <= 0) sprintMultiplier = defaultSprintMultiplier;
+        // Make sure sprint multiplier is valid (if not, use default)
+        if (m_SprintMultiplier <= 0) m_SprintMultiplier = k_DefaultSprintMultiplier;
     }
 
     /// <summary>
-    /// Start is called on the frame when the script is enabled (after Awake)
-    /// Used for initial setup and configuration validation
+    /// Called after Awake - sets up initial values.
     /// </summary>
     private void Start()
     {
-
-        // Validate speed - ensure it's positive
-        // If user enters 0 or negative in inspector, use default
-        if (speed <= 0)
+        // Make sure speed is valid
+        if (m_Speed <= 0)
         {
-            Debug.LogWarning($"Invalid speed ({speed}), using default: {defaultSpeed}");
-            speed = defaultSpeed;
+            Debug.LogWarning($"Invalid speed ({m_Speed}), using default: {k_DefaultSpeed}");
+            m_Speed = k_DefaultSpeed;
         }
 
-        // Ensure gravity is negative (downward force)
-        // User can enter 9.81 (positive) and we convert to -9.81
-        // If already negative, keep it as-is
-        gravity = (gravity > 0) ? -gravity : gravity;
+        // Convert gravity to negative (downward) if the user entered it as positive
+        m_Gravity = (m_Gravity > 0) ? -m_Gravity : m_Gravity;
 
-        // Sets the vector 3 data without creating a new vector 3
-        defaultPlayerPosition.Set(0f, 1.1f, 0f);
+        // Set the default position (where the player respawns)
+        k_DefaultPlayerPosition.Set(0f, 1.1f, 0f);
     }
 
     // ==================================================================
@@ -205,16 +151,14 @@ public class PlayerController : MonoBehaviour
     // ==================================================================
 
     /// <summary>
-    /// Called every frame (typically 60 times per second)
-    /// Main game loop - handles all per-frame logic
-    /// Order: Movement first, then animations based on movement
+    /// Called every frame - handles movement and position reset.
     /// </summary>
     private void Update()
     {
-        // Process movement input, camera-relative conversion, and physics
+        // Move the player based on input
         HandleMovement();
 
-        // Resets the position of the player 
+        // Reset position if the reset button is pressed
         PositionReset(InputsManager.Instance.resetPosition);
     }
 
@@ -223,88 +167,52 @@ public class PlayerController : MonoBehaviour
     // ==================================================================
 
     /// <summary>
-    /// Core movement handler - processes input and moves the character
+    /// Reads input, calculates movement direction, and moves the player.
     /// 
-    /// FLOW:
-    /// 1. Apply gravity to velocity.y
-    /// 2. Read raw input from InputsManager into velocity.xz
-    /// 3. Get camera forward/right vectors (flattened to ground plane)
-    /// 4. Transform input from local/camera space to world space
-    /// 5. Determine current speed (walk vs sprint)
-    /// 6. Combine horizontal movement + vertical gravity
-    /// 7. Move character using CharacterController
+    /// How it works:
+    /// 1. Apply gravity (falling or staying on ground)
+    /// 2. Read WASD/joystick input
+    /// 3. Figure out which way the camera is looking
+    /// 4. Convert input from "relative to camera" to "world space"
+    /// 5. Check if sprinting (faster movement)
+    /// 6. Move the character
     /// </summary>
     void HandleMovement()
     {
-        // Step 1: Apply gravity
-        // Modifies velocity.y based on grounded state or falling
+        // Step 1: Apply gravity (fall or stay grounded)
         HandleGravity();
 
-        // Step 2: Read movement input from centralized InputsManager
-        // InputsManager reads WASD/Arrow keys or Left Analog Stick
-        // x = -1 (left/A) to +1 (right/D)
-        // z = -1 (down/S) to +1 (up/W)  [Note: using Y component of Vector2]
-        velocity.x = InputsManager.Instance.movementInput.x;
-        velocity.z = InputsManager.Instance.movementInput.y;
+        // Step 2: Get input from InputsManager
+        // x = left/right (-1 to 1), y = forward/backward (-1 to 1)
+        m_Velocity.x = InputsManager.Instance.movementInput.x;
+        m_Velocity.z = InputsManager.Instance.movementInput.y;
 
-        // Step 3: Extract camera direction vectors
-        // These represent where the camera is looking (forward) and its right side
-        mainCamForward = mainCam.transform.forward;  // Camera's forward vector
-        mainCamRight = mainCam.transform.right;      // Camera's right vector
+        // Step 3: Get camera's forward and right directions
+        m_MainCamForward = m_MainCamera.transform.forward;
+        m_MainCamRight = m_MainCamera.transform.right;
 
-        // Step 4: Flatten vectors to XZ plane (remove Y component)
-        // This ensures movement stays horizontal - no flying up/down hills via input!
-        // Without this, looking up would make "forward" point upward
-        mainCamForward.y = 0f;
-        mainCamRight.y = 0f;
+        // Step 4: Flatten vectors (ignore up/down so we don't fly into the air)
+        m_MainCamForward.y = 0f;
+        m_MainCamRight.y = 0f;
 
-        // Normalize vectors to ensure consistent speed in all directions
-        // Prevents moving faster when looking at angles (diagonal speed boost)
-        // Normalized vector has length of exactly 1.0
-        mainCamForward.Normalize();
-        mainCamRight.Normalize();
+        // Normalize so diagonal movement isn't faster than straight
+        m_MainCamForward.Normalize();
+        m_MainCamRight.Normalize();
 
-        // Step 5: Calculate camera-relative movement direction
-        // FORMULA: moveDirection = (cameraRight * inputX) + (cameraForward * inputZ)
-        //
-        // EXAMPLE: Player presses W (forward, inputZ = 1) while camera faces North
-        //   moveDirection = (cameraRight * 0) + (cameraNorth * 1)
-        //   moveDirection = cameraNorth → Character moves North ✓
-        //
-        // EXAMPLE: Player presses W while camera faces East  
-        //   moveDirection = (cameraEastRight * 0) + (cameraEastForward * 1)
-        //   moveDirection = East → Character moves East (relative to camera) ✓
-        //
-        // This allows intuitive controls where "W" always moves "forward" on screen
-        moveDirection = mainCamRight * velocity.x + mainCamForward * velocity.z;
+        // Step 5: Calculate movement direction relative to camera
+        // Example: Press W (forward) while camera faces North → move North
+        // Press W while camera faces East → move East
+        m_MoveDirection = m_MainCamRight * m_Velocity.x + m_MainCamForward * m_Velocity.z;
 
-        // Step 6: Determine current movement speed based on sprint state
-        // Checks InputsManager.isSprinting boolean (toggled by sprint key binding)
-        //
-        // WHEN SPRINTING (isSprinting = true):
-        //   currentSpeed = speed × sprintMultiplier
-        //   Example: 2f × 2f = 4f units/sec (fast!)
-        //
-        // WHEN WALKING (isSprinting = false):
-        //   currentSpeed = speed (normal walking pace)
-        //   Example: 2f units/sec (normal speed)
-        //
-        // This approach allows easy extension:
-        //   - Add crouch: currentSpeed = speed × crouchMultiplier
-        //   - Add slow-walk: currentSpeed = speed × 0.5f
-        //   - Add stamina system: modify multiplier based on stamina remaining
-        currentSpeed = InputsManager.Instance.isSprinting ? speed * sprintMultiplier : speed;
+        // Step 6: Decide if we're walking or sprinting
+        m_CurrentSpeed = InputsManager.Instance.isSprinting ? m_Speed * m_SprintMultiplier : m_Speed;
 
-        // Step 7: Construct final movement vector
-        // X and Z come from camera-relative movement direction
-        // Y comes from gravity calculation (falling/jumping)
-        finalMovement.Set(moveDirection.x, velocity.y, moveDirection.z);
+        // Step 7: Combine horizontal movement with vertical gravity
+        m_FinalMovement.Set(m_MoveDirection.x, m_Velocity.y, m_MoveDirection.z);
 
-        // Step 8: Apply movement to CharacterController
-        // Move() takes absolute movement (not force like Rigidbody.AddForce)
-        // Multiply by currentSpeed (walk or sprint) and Time.deltaTime (frame time normalization)
-        // This ensures consistent movement regardless of framerate
-        characterController.Move(finalMovement * currentSpeed * Time.deltaTime);
+        // Step 8: Actually move the character
+        // Move() moves the character by this amount this frame
+        m_CharacterController.Move(m_FinalMovement * m_CurrentSpeed * Time.deltaTime);
     }
 
     // ==================================================================
@@ -312,75 +220,44 @@ public class PlayerController : MonoBehaviour
     // ==================================================================
 
     /// <summary>
-    /// Handles gravity and ground-checking for the character
-    /// CharacterController doesn't have built-in gravity like Rigidbody
-    /// We must manually apply downward force every frame
+    /// Handles gravity - keeps the player on the ground or makes them fall.
     /// 
-    /// GRAVITY STATES:
-    /// 1. GROUNDED: Apply small negative force (-2f) to keep character stuck to ground
-    ///    - Prevents floating when walking over small seams/edges
-    ///    - Ensures isGrounded stays true (CharacterController needs this)
-    ///    
-    /// 2. AIRBORNE: Accumulate gravity force (velocity increases downward)
-    ///    - Creates accelerating fall (realistic physics)
-    ///    - velocity.y gets more negative each frame until landing
+    /// Grounded: applies a tiny downward force to keep contact with the ground.
+    /// Airborne: accumulates gravity (falls faster over time).
     /// </summary>
     void HandleGravity()
     {
-        // Check if character is currently on the ground
-        // CharacterController.isGrounded uses a small raycast beneath the character
-        // Returns true when standing on any collider (ground, platforms, etc.)
-        if (characterController.isGrounded)
+        // Check if the player is standing on something
+        if (m_CharacterController.isGrounded)
         {
-            // === GROUNDED STATE ===
-            // Reset/set Y velocity to small negative value
-            // This keeps the character "snapped" to the ground
-            // Without this, the character might:
-            //   - Float slightly above ground (isGrounded becomes false)
-            //   - Trigger falling animation briefly when walking down slopes
-            //   - Bounce on uneven terrain
-            //
-            // Why -2f and not 0?
-            // CharacterController ground detection needs slight downward pressure
-            // to maintain contact with the ground collider
-            velocity.y = defaultGravity; // -2f by default
+            // On ground: small downward force to stay stuck to floor
+            m_Velocity.y = k_DefaultGravity; // -2f
         }
         else
         {
-            // === AIRBORNE STATE ===
-            // Apply accumulating gravity force
-            // Each frame, velocity.y decreases (becomes more negative)
-            // This creates acceleration: falls faster over time
-            //
-            // Formula: v = v + (g × Δt)
-            // Example with gravity = -9.81, deltaTime = 0.016 (60fps):
-            //   Frame 1: velocity.y = 0 + (-9.81 × 0.016) = -0.157
-            //   Frame 2: velocity.y = -0.157 + (-0.157) = -0.314
-            //   Frame 3: velocity.y = -0.314 + (-0.157) = -0.471
-            //   ...continues accelerating until grounded...
-            //
-            // This creates realistic parabolic fall trajectory!
-            velocity.y += gravity * Time.deltaTime;
+            // In air: gravity pulls you down, getting faster each frame
+            // Example: 0 → -0.157 → -0.314 → -0.471 → (accelerating fall)
+            m_Velocity.y += m_Gravity * Time.deltaTime;
         }
     }
 
     /// <summary>
-    /// Resets the postion of the player game object 
+    /// Resets the player to their starting position.
+    /// Turns off the CharacterController temporarily to avoid issues.
     /// </summary>
-    /// <param name="input"></param>
-    void PositionReset(bool input)
+    /// <param name="shouldReset">True when reset button is pressed</param>
+    void PositionReset(bool shouldReset)
     {
-        //Perform action when the value is true
-        if (input)
+        if (shouldReset)
         {
-            //Turns off the CHARACTER CONTROLLER to prevent any weird behaviour
-            characterController.enabled = false;
+            // Turn off controller so it doesn't interfere with position change
+            m_CharacterController.enabled = false;
 
-            //Sets the current postion to the default position
-            transform.position = defaultPlayerPosition;
+            // Move player back to start
+            transform.position = k_DefaultPlayerPosition;
 
-            //After change the position re-enable the CHARACTER CONTROLLER at new position
-            characterController.enabled = true;
+            // Turn controller back on at the new position
+            m_CharacterController.enabled = true;
         }
     }
 }
