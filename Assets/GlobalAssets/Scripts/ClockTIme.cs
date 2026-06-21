@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class ClockTIme : MonoBehaviour
+public class ClockTime : MonoBehaviour
 {
     private TextMeshProUGUI m_ClockText;
 
