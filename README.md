@@ -4,7 +4,3 @@ Game Engine: Unity 6
 
 
 Render Pipeline: URP
-
-
-
-Theme: Futuristic city / Day
