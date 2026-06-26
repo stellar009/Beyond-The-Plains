@@ -243,17 +243,15 @@ public class InputsManager : MonoBehaviour
     /// <param name="state">true = paused, false = playing</param>
     public void PauseGame(bool state)
     {
-        if (state)
+        if (!state)
         {
-            // When paused: movement and camera are still active (for menus)
-            // Note: You might want to disable these instead
+            // When paused: movement and camera are paused
             m_GameInteractions.Player.Movement.Enable();
             m_GameInteractions.Player.Camera.Enable();
         }
         else
         {
-            // When unpaused: movement and camera are disabled
-            // Note: You might want to enable these instead
+            // When unpaused: movement and camera are Enabled
             m_GameInteractions.Player.Movement.Disable();
             m_GameInteractions.Player.Camera.Disable();
         }
