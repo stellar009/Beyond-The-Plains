@@ -7,11 +7,6 @@
 /// </summary>
 public class PlayerCamera : MonoBehaviour
 {
-    [Header("Global Perspective Settings")]
-    [Tooltip("How fast the camera transitions between views (seconds)")]
-    [Range(0.01f, 2f)][SerializeField] private float m_SmoothTime = 0.25f;
-    // 0.1f = fast snap, 0.25f = smooth but responsive, 1.0f = slow cinematic
-
     [Header("Mouse Settings")]
     [Tooltip("How sensitive the mouse is for looking around")]
     [SerializeField] private float m_Sensitivity = 10f;
