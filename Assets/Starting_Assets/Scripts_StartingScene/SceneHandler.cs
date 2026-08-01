@@ -42,16 +42,6 @@ public class SceneHandler : MonoBehaviour
     }
 
     /// <summary>
-    /// Activates the loading screen when needed or can be used via other scripts
-    /// </summary>
-    /// <param name="loadingScreen"></param>
-    public void ActivateLoadingScreen(GameObject loadingScreen)
-    {
-        //Activate the loading screen 
-        loadingScreen.SetActive(true);
-    }
-
-    /// <summary>
     /// Coroutine to load the scene in background 
     /// Takes the scene name as parameter to load in the background
     /// </summary>
@@ -87,5 +77,4 @@ public class SceneHandler : MonoBehaviour
             yield return null;
         }
     }
-
 }

@@ -880,10 +880,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 131931265663141661, guid: 128be0dfe429460499dc9ded0f4d5352, type: 3}
-      propertyPath: m_AdditionalShaderChannelsFlag
-      value: 25
-      objectReference: {fileID: 0}
     - target: {fileID: 3642832170251275243, guid: 128be0dfe429460499dc9ded0f4d5352, type: 3}
       propertyPath: m_Name
       value: Env_Prop_01

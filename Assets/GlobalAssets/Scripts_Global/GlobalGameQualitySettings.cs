@@ -6,7 +6,7 @@ public class GlobalGameQualitySettings : MonoBehaviour
     private void Start()
     {
         EnableSRPBatching(true);
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = -1;
     }
 
     void EnableSRPBatching(bool state)

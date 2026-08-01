@@ -1,10 +1,13 @@
 using System.Collections;
 using UnityEngine;
 
-public class IntroPanelHandler : MonoBehaviour
+public class PanelHandler : MonoBehaviour
 {
+    [Header("Scene Objects")]
+    public GameObject m_SceneObject;
+
     //settings to set up Intro panel behaviour
-    [Header("Settings")]
+    [Header("Intro Settings")]
     public GameObject[] panels; //Array to store intro panels 
     public float delay = 2f; //Global delay for all panels in the array 
 
@@ -24,6 +27,8 @@ public class IntroPanelHandler : MonoBehaviour
             //turns off all panels in the array 
             panels[i].SetActive(false);
         }
+
+        EnableSceneObject(false);
     }
 
     //Runs after Awake 
@@ -56,7 +61,31 @@ public class IntroPanelHandler : MonoBehaviour
             {
                 //If panel is active disable it
                 panels[i].SetActive (false);
+
+                if(i == m_PanelSize-1)
+                {
+                    EnableSceneObject(true);
+                }
             }
         }
+    }
+
+    /// <summary>
+    /// Enable and disable scene object
+    /// </summary>
+    /// <param name="state"></param>
+    public void EnableSceneObject(bool state)
+    {
+        m_SceneObject.SetActive(state);
+    }
+
+    /// <summary>
+    /// Activates the loading screen when needed or can be used via other scripts
+    /// </summary>
+    /// <param name="loadingScreen"></param>
+    public void ActivateLoadingScreen(GameObject loadingScreen)
+    {
+        //Activate the loading screen 
+        loadingScreen.SetActive(true);
     }
 }
