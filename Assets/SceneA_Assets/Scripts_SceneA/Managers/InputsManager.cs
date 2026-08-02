@@ -53,12 +53,6 @@ public class InputsManager : MonoBehaviour
     /// </summary>
     public bool isSprinting { get; private set; }
 
-    /// <summary>
-    /// Resets the player position when pressed.
-    /// True for a moment, then auto-resets to false.
-    /// </summary>
-    public bool resetPosition { get; private set; }
-
     // ==================== STATE VARIABLES ====================
 
     /// <summary>
@@ -125,9 +119,6 @@ public class InputsManager : MonoBehaviour
 
         // Sprint (Left Shift)
         m_GameInteractions.Player.Sprint.performed += Sprint;
-
-        // Reset Position (P key)
-        m_GameInteractions.Player.PositionReset.performed += ResetPosition;
     }
 
     /// <summary>
@@ -150,7 +141,6 @@ public class InputsManager : MonoBehaviour
         m_GameInteractions.Player.PauseGame.performed -= PauseGame;
         m_GameInteractions.Player.Attacks.performed -= InAttackState;
         m_GameInteractions.Player.Sprint.performed -= Sprint;
-        m_GameInteractions.Player.PositionReset.performed -= ResetPosition;
     }
 
     // ==================================================================
@@ -222,16 +212,6 @@ public class InputsManager : MonoBehaviour
         isSprinting = !isSprinting; // Flip sprint state
     }
 
-    /// <summary>
-    /// Called when Reset Position button (P) is pressed.
-    /// Sets resetPosition to true for 1 second, then auto-resets to false.
-    /// </summary>
-    void ResetPosition(InputAction.CallbackContext ctx)
-    {
-        resetPosition = !resetPosition; // Set to true
-        Invoke(nameof(ResetPlayerPositionButtonState), 1f); // Auto-reset after 1 second
-    }
-
     // ==================================================================
     //                           UTILITY METHODS
     // ==================================================================
@@ -271,14 +251,5 @@ public class InputsManager : MonoBehaviour
         // Lock cursor to center when hidden (for gameplay)
         // Allow free movement when visible (for menus)
         Cursor.lockState = canShow ? CursorLockMode.None : CursorLockMode.Locked;
-    }
-
-    /// <summary>
-    /// Resets the resetPosition button state back to false.
-    /// Called automatically 1 second after ResetPosition is pressed.
-    /// </summary>
-    void ResetPlayerPositionButtonState()
-    {
-        resetPosition = !resetPosition; // Flip back to false
     }
 }

@@ -157,9 +157,6 @@ public class PlayerController : MonoBehaviour
     {
         // Move the player based on input
         HandleMovement();
-
-        // Reset position if the reset button is pressed
-        PositionReset(InputsManager.Instance.resetPosition);
     }
 
     // ==================================================================
