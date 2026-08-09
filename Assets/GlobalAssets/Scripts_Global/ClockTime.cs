@@ -11,8 +11,14 @@ public class ClockTime : MonoBehaviour
     private int m_GameHours;
     private int m_TotalGameMinutes;
 
+    private int m_TimeVariationMinutes;
+    private int m_TimeVariationHours;
+
     private void Start()
     {
+        m_TimeVariationMinutes = Random.Range(10, 20);
+        m_TimeVariationHours = Random.Range(1, 5);
+
         m_ClockText = GetComponent<TextMeshProUGUI>();
         if (!m_ClockText) Debug.Log($"{m_ClockText} Component Not Found");
     }
@@ -37,7 +43,7 @@ public class ClockTime : MonoBehaviour
             m_GameSeconds = 0;
             m_TotalGameMinutes = 0;
         }
-        
-        m_ClockText.text = $"{m_GameHours} : {m_GameMinutes}";
+
+        m_ClockText.text = $"{m_GameHours + m_TimeVariationHours} : {m_GameMinutes + m_TimeVariationMinutes}";
     }
 }

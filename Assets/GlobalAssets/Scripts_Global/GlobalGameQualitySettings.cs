@@ -6,7 +6,6 @@ public class GlobalGameQualitySettings : MonoBehaviour
 {
     [Header("Shader Settings")]
     [SerializeField] private ShaderVariantCollection m_WarmUpShaders;
-    [SerializeField] private TextMeshProUGUI m_LogText;
 
     [Header("Version Settings")]
     [SerializeField] private TextMeshProUGUI m_VersionText;
@@ -28,7 +27,6 @@ public class GlobalGameQualitySettings : MonoBehaviour
     {
         if (m_WarmUpShaders.isWarmedUp)
         {
-            m_LogText.text = "Shader Already Compiled";
             return;
         }
 
