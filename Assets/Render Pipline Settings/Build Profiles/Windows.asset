@@ -18,18 +18,21 @@ MonoBehaviour:
   m_PlatformId: 4e3c793746204150860bf175a9a41a05
   m_PlatformBuildProfile:
     rid: 376429426624692478
+  m_ActivePlatformGuid: 
+  m_AdditionalPlatformBuildSettings: []
   m_OverrideGlobalSceneList: 1
   m_Scenes:
   - m_enabled: 1
-    m_path: Assets/Scenes/Starting.unity
+    m_path: Assets/Scenes/StartingScene.unity
     m_guid: ca3a0dc4367ae724d9188ec4ce21e9bc
   - m_enabled: 1
-    m_path: Assets/Scenes/SceneA.unity
-    m_guid: b7fdf2a1aa8d94f4a8e27999c6c0104b
+    m_path: Assets/Scenes/Grasslands.unity
+    m_guid: 6fa9a23d27fd8a645a3d57609ba4205e
   m_HasScriptingDefines: 0
   m_ScriptingDefines: []
   m_PlayerSettingsYaml:
     m_Settings: []
+  requiredComponents: []
   references:
     version: 2
     RefIds:
@@ -39,6 +42,7 @@ MonoBehaviour:
         m_Development: 0
         m_ConnectProfiler: 0
         m_BuildWithDeepProfilingSupport: 0
+        m_BuildWithCodeCoverage: 0
         m_AllowDebugging: 0
         m_WaitForManagedDebugger: 0
         m_ManagedDebuggerFixedPort: 0
