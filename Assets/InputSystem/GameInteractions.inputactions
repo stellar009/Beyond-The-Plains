@@ -37,12 +37,12 @@
                     "priority": 0
                 },
                 {
-                    "name": "Attacks",
+                    "name": "Fire",
                     "type": "Button",
                     "id": "0a685782-6bb1-4fb1-b2f9-9c488aec7e40",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press(behavior=2)",
                     "initialStateCheck": false,
                     "priority": 0
                 },
@@ -142,7 +142,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Attacks",
+                    "action": "Fire",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

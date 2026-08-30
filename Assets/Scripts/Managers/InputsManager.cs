@@ -115,7 +115,7 @@ public class InputsManager : MonoBehaviour
         m_GameInteractions.Player.PauseGame.performed += PauseGame;
 
         // Attack (Left Mouse Click)
-        m_GameInteractions.Player.Attacks.performed += InAttackState;
+        m_GameInteractions.Player.Fire.performed += InAttackState;
 
         // Sprint (Left Shift)
         m_GameInteractions.Player.Sprint.performed += Sprint;
@@ -139,7 +139,7 @@ public class InputsManager : MonoBehaviour
         m_GameInteractions.Player.Camera.canceled -= OnCameraInputCanceled;
 
         m_GameInteractions.Player.PauseGame.performed -= PauseGame;
-        m_GameInteractions.Player.Attacks.performed -= InAttackState;
+        m_GameInteractions.Player.Fire.performed -= InAttackState;
         m_GameInteractions.Player.Sprint.performed -= Sprint;
     }
 
