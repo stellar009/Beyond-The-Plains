@@ -1,36 +1,69 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Gun : MonoBehaviour
 {
+    [SerializeField] private float m_Range = 50f;
+    [SerializeField] private float m_Damage = 10f;
+    [SerializeField] private float m_ImpactForce = 100f;
+    [SerializeField] private Image m_Crosshair;
 
-    [SerializeField] private int m_MaxBulletCount = 20;
-    [SerializeField] private GameObject m_BulletPrefab;
+    private Camera m_FPSCam;
 
-    private int count = 1;
-    private float delay = 0.5f;
-    private float timer;
+    private float m_RecoilDuration = 0.5f;
+    private float m_timer;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private Target m_TargetObject;
+    private RaycastHit m_Hit;
+    private RaycastHit m_IsTarget;
+
+    private void Start()
     {
-        if (!m_BulletPrefab) Debug.Log("No bullets");
+        m_FPSCam = Camera.main;
+
+        if (!m_Crosshair) Debug.Log("No Crosshair");
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        timer += Time.deltaTime;
-        if(InputsManager.Instance.attackState && count <= m_MaxBulletCount && timer > delay)
+        m_timer += Time.deltaTime;
+
+        if (InputsManager.Instance.attackState && m_timer > m_RecoilDuration)
         {
-            timer = 0;
-            FireBullet();
-            count++;
-            Debug.Log($"Bullets fired: {count}");
+            m_timer = 0;
+            ShootBullet();
+        }
+        GunRange();
+    }
+
+    void ShootBullet()
+    {
+        if (Physics.Raycast(m_FPSCam.transform.position, m_FPSCam.transform.forward, out m_Hit, m_Range))
+        {
+            m_TargetObject = m_Hit.transform.GetComponent<Target>();
+
+            if (m_Hit.rigidbody)
+            {
+                m_Hit.rigidbody.AddForce(-m_Hit.normal * m_ImpactForce);
+            }
+
+            if (m_TargetObject)
+            {
+                m_TargetObject.TakeDamage(m_Damage);
+            }
+
+
         }
     }
 
-    void FireBullet()
+    void GunRange()
     {
-        Instantiate(m_BulletPrefab, gameObject.transform);
+        if (Physics.Raycast(m_FPSCam.transform.position, m_FPSCam.transform.forward, out m_IsTarget, m_Range))
+        {
+            if (m_IsTarget.transform.CompareTag("Target"))
+                m_Crosshair.color = Color.red;
+            else
+                m_Crosshair.color = Color.white;
+        }
     }
 }

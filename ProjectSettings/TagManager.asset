@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Props
   - Lights
+  - Target
   layers:
   - Default
   - TransparentFX
