@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 /// <summary>
 /// InputsManager - Handles all player inputs using Unity's new Input System.
 /// Uses Singleton pattern so only one instance exists.
@@ -76,7 +77,7 @@ public class InputsManager : MonoBehaviour
         ShowCursor(false);
 
         // ========== SINGLETON SETUP ==========
-        // If no instance exists, this becomes the one and only
+        //If no instance exists, this becomes the one and only
         if (Instance == null)
         {
             Instance = this;

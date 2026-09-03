@@ -29,6 +29,8 @@ public class PlayerCamera : MonoBehaviour
     // Mouse movement values from input system
     private float m_MouseX, m_MouseY;
 
+    private InputsManager m_InputManager;
+
     /// <summary>
     /// Called when the script starts - gets the player body reference.
     /// </summary>
