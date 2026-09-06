@@ -25,9 +25,6 @@ MonoBehaviour:
   - m_enabled: 1
     m_path: Assets/Scenes/StartingScene.unity
     m_guid: ca3a0dc4367ae724d9188ec4ce21e9bc
-  - m_enabled: 1
-    m_path: Assets/Scenes/BattleGround.unity
-    m_guid: c268b11ed3585fb48a4137e940d68258
   m_HasScriptingDefines: 0
   m_ScriptingDefines: []
   m_PlayerSettingsYaml:
