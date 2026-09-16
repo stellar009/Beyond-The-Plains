@@ -128,7 +128,7 @@ public partial class @GameInteractions: IInputActionCollection2, IDisposable
                     ""id"": ""0a685782-6bb1-4fb1-b2f9-9c488aec7e40"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": ""Press(behavior=2)"",
+                    ""interactions"": ""Press(pressPoint=0.1,behavior=2)"",
                     ""initialStateCheck"": false,
                     ""priority"": 0
                 },
