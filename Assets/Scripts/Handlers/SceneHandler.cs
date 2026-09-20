@@ -10,6 +10,9 @@ public class SceneHandler : MonoBehaviour
     //Minimum loading time used to load a scene in background
     public float minLoadTimer = 2f;
 
+    [Header("Loading Panel Settings")]
+    public GameObject loadingPanel;
+
     //Cache memory or variables
 
     //Addition variable to store game time when the game runs
@@ -29,6 +32,11 @@ public class SceneHandler : MonoBehaviour
         if (m_BtnText == null) return; //returns null value when the btnText not found 
         else
             m_BtnText.enabled = true; //Ensures the text is enabled when the game starts
+
+        if (!loadingPanel)
+            Debug.Log("No loading panel found");
+        else
+            loadingPanel.SetActive(false);
     }
 
     /// <summary>
@@ -49,6 +57,7 @@ public class SceneHandler : MonoBehaviour
     /// <returns></returns>
     IEnumerator LoadScene(string sceneName)
     {
+        loadingPanel.SetActive(true);
         //Default timer to store game time
         m_Timer = 0f;
 
