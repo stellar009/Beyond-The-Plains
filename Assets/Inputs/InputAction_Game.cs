@@ -101,6 +101,16 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""initialStateCheck"": true,
                     ""priority"": 0
+                },
+                {
+                    ""name"": ""Sprint"",
+                    ""type"": ""Button"",
+                    ""id"": ""7a90cfba-3d61-4b2d-88ea-e9d460088d50"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false,
+                    ""priority"": 0
                 }
             ],
             ""bindings"": [
@@ -158,6 +168,28 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cda4f421-437e-4c5f-b77e-e6824272365a"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0d248b54-a366-4bb1-923c-62af5fbeff09"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -245,6 +277,26 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
                     ""interactions"": ""Press(behavior=2)"",
                     ""initialStateCheck"": false,
                     ""priority"": 0
+                },
+                {
+                    ""name"": ""Talk"",
+                    ""type"": ""Button"",
+                    ""id"": ""d129763a-efd4-43ed-b3a7-4ad61c6c389d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": false,
+                    ""priority"": 0
+                },
+                {
+                    ""name"": ""ContinueTalk"",
+                    ""type"": ""Button"",
+                    ""id"": ""19e5b482-4c9d-463e-b4ca-175851442bbc"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": false,
+                    ""priority"": 0
                 }
             ],
             ""bindings"": [
@@ -258,44 +310,37 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
                     ""action"": ""Cursor"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""Quest"",
-            ""id"": ""0588384f-50ee-4c2b-9be3-48538de973d0"",
-            ""actions"": [
-                {
-                    ""name"": ""NextDialouge"",
-                    ""type"": ""Button"",
-                    ""id"": ""2cfe02b9-e849-49c1-a03f-d13b45ff42f9"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false,
-                    ""priority"": 0
-                }
-            ],
-            ""bindings"": [
+                },
                 {
                     ""name"": """",
-                    ""id"": ""2495d354-be43-4e36-a126-0b419219a43c"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""id"": ""600f06e1-4b38-429b-95de-b275c3467a9b"",
+                    ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""NextDialouge"",
+                    ""action"": ""Talk"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""9eb84a85-e470-429a-8252-f314e19b5a82"",
-                    ""path"": ""<Keyboard>/f"",
+                    ""id"": ""1ede953e-f5d7-4d4a-8eec-b2cce1bc8fc2"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""NextDialouge"",
+                    ""action"": ""ContinueTalk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2f94cb67-5845-4cd3-a0d2-658f88ee0bbc"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ContinueTalk"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -307,6 +352,7 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
+        m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         // Camera
         m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
         m_Camera_MouseX = m_Camera.FindAction("MouseX", throwIfNotFound: true);
@@ -315,9 +361,8 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
         // Interactions
         m_Interactions = asset.FindActionMap("Interactions", throwIfNotFound: true);
         m_Interactions_Cursor = m_Interactions.FindAction("Cursor", throwIfNotFound: true);
-        // Quest
-        m_Quest = asset.FindActionMap("Quest", throwIfNotFound: true);
-        m_Quest_NextDialouge = m_Quest.FindAction("NextDialouge", throwIfNotFound: true);
+        m_Interactions_Talk = m_Interactions.FindAction("Talk", throwIfNotFound: true);
+        m_Interactions_ContinueTalk = m_Interactions.FindAction("ContinueTalk", throwIfNotFound: true);
     }
 
     ~@InputAction_Game()
@@ -325,7 +370,6 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, InputAction_Game.Player.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Camera.enabled, "This will cause a leak and performance issues, InputAction_Game.Camera.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Interactions.enabled, "This will cause a leak and performance issues, InputAction_Game.Interactions.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_Quest.enabled, "This will cause a leak and performance issues, InputAction_Game.Quest.Disable() has not been called.");
     }
 
     /// <summary>
@@ -402,6 +446,7 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Movement;
+    private readonly InputAction m_Player_Sprint;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -417,6 +462,10 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Movement".
         /// </summary>
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Sprint".
+        /// </summary>
+        public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -446,6 +495,9 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
+            @Sprint.started += instance.OnSprint;
+            @Sprint.performed += instance.OnSprint;
+            @Sprint.canceled += instance.OnSprint;
         }
 
         /// <summary>
@@ -460,6 +512,9 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
             @Movement.canceled -= instance.OnMovement;
+            @Sprint.started -= instance.OnSprint;
+            @Sprint.performed -= instance.OnSprint;
+            @Sprint.canceled -= instance.OnSprint;
         }
 
         /// <summary>
@@ -616,6 +671,8 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Interactions;
     private List<IInteractionsActions> m_InteractionsActionsCallbackInterfaces = new List<IInteractionsActions>();
     private readonly InputAction m_Interactions_Cursor;
+    private readonly InputAction m_Interactions_Talk;
+    private readonly InputAction m_Interactions_ContinueTalk;
     /// <summary>
     /// Provides access to input actions defined in input action map "Interactions".
     /// </summary>
@@ -631,6 +688,14 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Interactions/Cursor".
         /// </summary>
         public InputAction @Cursor => m_Wrapper.m_Interactions_Cursor;
+        /// <summary>
+        /// Provides access to the underlying input action "Interactions/Talk".
+        /// </summary>
+        public InputAction @Talk => m_Wrapper.m_Interactions_Talk;
+        /// <summary>
+        /// Provides access to the underlying input action "Interactions/ContinueTalk".
+        /// </summary>
+        public InputAction @ContinueTalk => m_Wrapper.m_Interactions_ContinueTalk;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -660,6 +725,12 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
             @Cursor.started += instance.OnCursor;
             @Cursor.performed += instance.OnCursor;
             @Cursor.canceled += instance.OnCursor;
+            @Talk.started += instance.OnTalk;
+            @Talk.performed += instance.OnTalk;
+            @Talk.canceled += instance.OnTalk;
+            @ContinueTalk.started += instance.OnContinueTalk;
+            @ContinueTalk.performed += instance.OnContinueTalk;
+            @ContinueTalk.canceled += instance.OnContinueTalk;
         }
 
         /// <summary>
@@ -674,6 +745,12 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
             @Cursor.started -= instance.OnCursor;
             @Cursor.performed -= instance.OnCursor;
             @Cursor.canceled -= instance.OnCursor;
+            @Talk.started -= instance.OnTalk;
+            @Talk.performed -= instance.OnTalk;
+            @Talk.canceled -= instance.OnTalk;
+            @ContinueTalk.started -= instance.OnContinueTalk;
+            @ContinueTalk.performed -= instance.OnContinueTalk;
+            @ContinueTalk.canceled -= instance.OnContinueTalk;
         }
 
         /// <summary>
@@ -707,102 +784,6 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="InteractionsActions" /> instance referencing this action map.
     /// </summary>
     public InteractionsActions @Interactions => new InteractionsActions(this);
-
-    // Quest
-    private readonly InputActionMap m_Quest;
-    private List<IQuestActions> m_QuestActionsCallbackInterfaces = new List<IQuestActions>();
-    private readonly InputAction m_Quest_NextDialouge;
-    /// <summary>
-    /// Provides access to input actions defined in input action map "Quest".
-    /// </summary>
-    public struct QuestActions
-    {
-        private @InputAction_Game m_Wrapper;
-
-        /// <summary>
-        /// Construct a new instance of the input action map wrapper class.
-        /// </summary>
-        public QuestActions(@InputAction_Game wrapper) { m_Wrapper = wrapper; }
-        /// <summary>
-        /// Provides access to the underlying input action "Quest/NextDialouge".
-        /// </summary>
-        public InputAction @NextDialouge => m_Wrapper.m_Quest_NextDialouge;
-        /// <summary>
-        /// Provides access to the underlying input action map instance.
-        /// </summary>
-        public InputActionMap Get() { return m_Wrapper.m_Quest; }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
-        public void Enable() { Get().Enable(); }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
-        public void Disable() { Get().Disable(); }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
-        public bool enabled => Get().enabled;
-        /// <summary>
-        /// Implicitly converts an <see ref="QuestActions" /> to an <see ref="InputActionMap" /> instance.
-        /// </summary>
-        public static implicit operator InputActionMap(QuestActions set) { return set.Get(); }
-        /// <summary>
-        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
-        /// </summary>
-        /// <param name="instance">Callback instance.</param>
-        /// <remarks>
-        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
-        /// </remarks>
-        /// <seealso cref="QuestActions" />
-        public void AddCallbacks(IQuestActions instance)
-        {
-            if (instance == null || m_Wrapper.m_QuestActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_QuestActionsCallbackInterfaces.Add(instance);
-            @NextDialouge.started += instance.OnNextDialouge;
-            @NextDialouge.performed += instance.OnNextDialouge;
-            @NextDialouge.canceled += instance.OnNextDialouge;
-        }
-
-        /// <summary>
-        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
-        /// </summary>
-        /// <remarks>
-        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
-        /// </remarks>
-        /// <seealso cref="QuestActions" />
-        private void UnregisterCallbacks(IQuestActions instance)
-        {
-            @NextDialouge.started -= instance.OnNextDialouge;
-            @NextDialouge.performed -= instance.OnNextDialouge;
-            @NextDialouge.canceled -= instance.OnNextDialouge;
-        }
-
-        /// <summary>
-        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="QuestActions.UnregisterCallbacks(IQuestActions)" />.
-        /// </summary>
-        /// <seealso cref="QuestActions.UnregisterCallbacks(IQuestActions)" />
-        public void RemoveCallbacks(IQuestActions instance)
-        {
-            if (m_Wrapper.m_QuestActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        /// <summary>
-        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
-        /// </summary>
-        /// <remarks>
-        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
-        /// </remarks>
-        /// <seealso cref="QuestActions.AddCallbacks(IQuestActions)" />
-        /// <seealso cref="QuestActions.RemoveCallbacks(IQuestActions)" />
-        /// <seealso cref="QuestActions.UnregisterCallbacks(IQuestActions)" />
-        public void SetCallbacks(IQuestActions instance)
-        {
-            foreach (var item in m_Wrapper.m_QuestActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_QuestActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    /// <summary>
-    /// Provides a new <see cref="QuestActions" /> instance referencing this action map.
-    /// </summary>
-    public QuestActions @Quest => new QuestActions(this);
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player" which allows adding and removing callbacks.
     /// </summary>
@@ -817,6 +798,13 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMovement(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Sprint" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSprint(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Camera" which allows adding and removing callbacks.
@@ -861,20 +849,19 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnCursor(InputAction.CallbackContext context);
-    }
-    /// <summary>
-    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Quest" which allows adding and removing callbacks.
-    /// </summary>
-    /// <seealso cref="QuestActions.AddCallbacks(IQuestActions)" />
-    /// <seealso cref="QuestActions.RemoveCallbacks(IQuestActions)" />
-    public interface IQuestActions
-    {
         /// <summary>
-        /// Method invoked when associated input action "NextDialouge" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Talk" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnNextDialouge(InputAction.CallbackContext context);
+        void OnTalk(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ContinueTalk" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnContinueTalk(InputAction.CallbackContext context);
     }
 }

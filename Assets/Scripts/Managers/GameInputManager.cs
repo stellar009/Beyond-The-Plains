@@ -8,6 +8,8 @@ public class GameInputManager : MonoBehaviour
     public Vector2 playerMovement { get; private set; }
     public bool nextDialouge { get; private set; }
 
+    public bool isSprint { get; private set; }
+
     private void Awake()
     {
         m_InputAction = new InputAction_Game();
@@ -20,25 +22,25 @@ public class GameInputManager : MonoBehaviour
 
         m_InputAction.Player.Movement.performed += OnPlayerMovementPerformed;
         m_InputAction.Player.Movement.canceled += OnPlayerMovementCanceled;
+        m_InputAction.Player.Sprint.performed += OnSprintPressed;
 
         m_InputAction.Interactions.Cursor.performed += ActivateCursor;
-
-        m_InputAction.Quest.Enable();
-        m_InputAction.Quest.NextDialouge.performed += NextDialouge;
+        m_InputAction.Interactions.Talk.performed += StartTalking;
+        m_InputAction.Interactions.ContinueTalk.performed += ContinueTalking;
     }
 
     private void OnDisable()
     {
+        m_InputAction.Interactions.ContinueTalk.performed -= ContinueTalking;
+        m_InputAction.Interactions.Talk.performed -= StartTalking;
         m_InputAction.Interactions.Cursor.performed -= ActivateCursor;
 
         m_InputAction.Player.Movement.performed -= OnPlayerMovementPerformed;
         m_InputAction.Player.Movement.canceled -= OnPlayerMovementCanceled;
+        m_InputAction.Player.Sprint.performed -= OnSprintPressed;
 
         m_InputAction.Player.Disable();
         m_InputAction.Interactions.Disable();
-
-        m_InputAction.Quest.NextDialouge.performed -= NextDialouge;
-        m_InputAction.Quest.Disable();
     }
 
     void OnPlayerMovementPerformed(InputAction.CallbackContext ctx)
@@ -51,13 +53,47 @@ public class GameInputManager : MonoBehaviour
         playerMovement = Vector2.zero;
     }
 
-    void NextDialouge(InputAction.CallbackContext ctx)
+    void OnSprintPressed(InputAction.CallbackContext ctx)
     {
-        nextDialouge = !nextDialouge;
+        isSprint = !isSprint;
+    }
+
+    void StartTalking(InputAction.CallbackContext ctx)
+    {
+        FindObjectOfType<DialogueTrigger>().TriggerDialogue();
+    }
+
+    void ContinueTalking(InputAction.CallbackContext ctx)
+    {
+        FindObjectOfType<DialogueSystem>().NextSenetence();
     }
 
     void ActivateCursor(InputAction.CallbackContext ctx)
     {
         GameManager.instance.EnableCursor(ctx.ReadValueAsButton());
+    }
+
+    public void TalkingStarted(bool start)
+    {
+        if (start)
+        {
+            m_InputAction.Interactions.Talk.Disable();
+        }
+        else
+        {
+            m_InputAction.Interactions.Talk.Enable();
+        }
+    }
+
+    public void DialogueCompleted(bool complete)
+    {
+        if (complete)
+        {
+            m_InputAction.Interactions.ContinueTalk.Disable();
+        }
+        else
+        {
+            m_InputAction.Interactions.ContinueTalk.Enable();
+        }
     }
 }
