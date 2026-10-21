@@ -300,7 +300,7 @@
     },
     "com.unity.visualscripting": {
       "version": "1.9.12",
-      "depth": 0,
+      "depth": 1,
       "source": "registry",
       "dependencies": {
         "com.unity.ugui": "2.0.0",

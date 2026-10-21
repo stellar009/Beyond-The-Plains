@@ -25,14 +25,10 @@ public class GameInputManager : MonoBehaviour
         m_InputAction.Player.Sprint.performed += OnSprintPressed;
 
         m_InputAction.Interactions.Cursor.performed += ActivateCursor;
-        m_InputAction.Interactions.Talk.performed += StartTalking;
-        m_InputAction.Interactions.ContinueTalk.performed += ContinueTalking;
     }
 
     private void OnDisable()
     {
-        m_InputAction.Interactions.ContinueTalk.performed -= ContinueTalking;
-        m_InputAction.Interactions.Talk.performed -= StartTalking;
         m_InputAction.Interactions.Cursor.performed -= ActivateCursor;
 
         m_InputAction.Player.Movement.performed -= OnPlayerMovementPerformed;
@@ -77,11 +73,11 @@ public class GameInputManager : MonoBehaviour
     {
         if (start)
         {
-            m_InputAction.Interactions.Talk.Disable();
+            m_InputAction.InteractionsDialogue.Talk.Disable();
         }
         else
         {
-            m_InputAction.Interactions.Talk.Enable();
+            m_InputAction.InteractionsDialogue.Talk.Enable();
         }
     }
 
@@ -89,11 +85,41 @@ public class GameInputManager : MonoBehaviour
     {
         if (complete)
         {
-            m_InputAction.Interactions.ContinueTalk.Disable();
+            m_InputAction.InteractionsDialogue.ContinueTalk.Disable();
         }
         else
         {
-            m_InputAction.Interactions.ContinueTalk.Enable();
+            m_InputAction.InteractionsDialogue.ContinueTalk.Enable();
+        }
+    }
+
+    public void EnableSprint(bool enable)
+    {
+        if (enable)
+        {
+            m_InputAction.Player.Sprint.Enable();
+        }
+        else
+        {
+            m_InputAction.Player.Sprint.Disable();
+        }
+    }
+
+    public void EnableDialogueInteraction(bool enable)
+    {
+        if(enable)
+        {
+            m_InputAction.InteractionsDialogue.Enable();
+
+            m_InputAction.InteractionsDialogue.Talk.performed += StartTalking;
+            m_InputAction.InteractionsDialogue.ContinueTalk.performed += ContinueTalking;
+        }
+        else
+        {
+            m_InputAction.InteractionsDialogue.ContinueTalk.performed -= ContinueTalking;
+            m_InputAction.InteractionsDialogue.Talk.performed -= StartTalking;
+
+            m_InputAction.InteractionsDialogue.Disable();
         }
     }
 }
