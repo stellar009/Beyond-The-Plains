@@ -15,6 +15,16 @@
                     "interactions": "",
                     "initialStateCheck": true,
                     "priority": 0
+                },
+                {
+                    "name": "Sprint",
+                    "type": "Button",
+                    "id": "7a90cfba-3d61-4b2d-88ea-e9d460088d50",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
                 }
             ],
             "bindings": [
@@ -72,6 +82,28 @@
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "cda4f421-437e-4c5f-b77e-e6824272365a",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0d248b54-a366-4bb1-923c-62af5fbeff09",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -176,16 +208,26 @@
             ]
         },
         {
-            "name": "Quest",
-            "id": "0588384f-50ee-4c2b-9be3-48538de973d0",
+            "name": "InteractionsDialogue",
+            "id": "bb72a4e3-9c6d-4564-ba51-1460a0669575",
             "actions": [
                 {
-                    "name": "NextDialouge",
+                    "name": "Talk",
                     "type": "Button",
-                    "id": "2cfe02b9-e849-49c1-a03f-d13b45ff42f9",
+                    "id": "9de586e2-61cb-4d91-b9cf-2c43abc71bd4",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "ContinueTalk",
+                    "type": "Button",
+                    "id": "95d28ddc-cc72-4347-a24e-7a02fd1a8787",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press",
                     "initialStateCheck": false,
                     "priority": 0
                 }
@@ -193,23 +235,34 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "2495d354-be43-4e36-a126-0b419219a43c",
-                    "path": "<Keyboard>/space",
+                    "id": "a68ddd9e-cc0c-41cb-ac53-aa3afcb73aa5",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "NextDialouge",
+                    "action": "Talk",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "9eb84a85-e470-429a-8252-f314e19b5a82",
-                    "path": "<Keyboard>/f",
+                    "id": "fadc06d4-60b3-4957-9691-90fee85e3f29",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "NextDialouge",
+                    "action": "ContinueTalk",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "06e883f0-4960-4dc3-9f03-c792a2dd5387",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ContinueTalk",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

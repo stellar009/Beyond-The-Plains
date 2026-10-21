@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        GraphicsSettings.useScriptableRenderPipelineBatching = true;
+        QualitySettings.vSyncCount = 2;
 
         EnableCursor(false);
     }

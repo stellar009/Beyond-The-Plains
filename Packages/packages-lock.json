@@ -300,7 +300,7 @@
     },
     "com.unity.visualscripting": {
       "version": "1.9.12",
-      "depth": 0,
+      "depth": 1,
       "source": "registry",
       "dependencies": {
         "com.unity.ugui": "2.0.0",
@@ -321,13 +321,13 @@
       },
       "hash": "9750dadc592f421c356bf0376c73e61abbe323e3"
     },
-    "com.vrmc.univrm": {
-      "version": "https://github.com/vrm-c/UniVRM.git?path=/Packages/VRM#v0.131.3",
+    "com.vrmc.vrm": {
+      "version": "https://github.com/vrm-c/UniVRM.git?path=/Packages/VRM10#v0.131.3",
       "depth": 0,
       "source": "git",
       "dependencies": {
-        "com.vrmc.gltf": "0.131.3",
-        "com.unity.ugui": "1.0.0"
+        "com.unity.timeline": "1.7.6",
+        "com.vrmc.gltf": "0.131.3"
       },
       "hash": "9750dadc592f421c356bf0376c73e61abbe323e3"
     },
