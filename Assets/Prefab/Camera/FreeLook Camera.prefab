@@ -30,13 +30,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9093685710016228757}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.122183256, y: 0.0000000030738545, z: -3.7840878e-10, w: 0.9925076}
+  m_LocalRotation: {x: 0.12218115, y: 0, z: 0, w: 0.9925079}
   m_LocalPosition: {x: 0, y: 0.5, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 14.036, y: 0, z: 0}
 --- !u!114 &8883521807965616765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,7 +95,7 @@ MonoBehaviour:
   TargetOffset: {x: 0, y: 0.5, z: 0}
   TrackerSettings:
     BindingMode: 4
-    PositionDamping: {x: 0.1, y: 0.1, z: 0.1}
+    PositionDamping: {x: 0.3, y: 0.1, z: 0.1}
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
@@ -126,7 +126,7 @@ MonoBehaviour:
   VerticalAxis:
     Value: 0
     Center: 0
-    Range: {x: 0, y: 45}
+    Range: {x: 0, y: 0}
     Wrap: 0
     Recentering:
       Enabled: 0
@@ -228,15 +228,15 @@ MonoBehaviour:
         DecelTime: 0.2
     - Name: Orbit Scale
       Owner: {fileID: 8137668212167038213}
-      Enabled: 1
+      Enabled: 0
       Input:
         InputAction: {fileID: -2547616081613674297, guid: 8a2904150605ca5478ed9df22d2162cd, type: 3}
-        Gain: 0
+        Gain: 2
         CancelDeltaTime: 0
       InputValue: 0
       Driver:
-        AccelTime: 0
-        DecelTime: 0
+        AccelTime: 0.2
+        DecelTime: 0.2
   PlayerIndex: -1
   AutoEnableInputs: 1
 --- !u!95 &7656416290761945472
