@@ -56,12 +56,12 @@ public class GameInputManager : MonoBehaviour
 
     void StartTalking(InputAction.CallbackContext ctx)
     {
-        FindObjectOfType<DialogueTrigger>().TriggerDialogue();
+        
     }
 
     void ContinueTalking(InputAction.CallbackContext ctx)
     {
-        FindObjectOfType<DialogueSystem>().NextSenetence();
+        
     }
 
     void ActivateCursor(InputAction.CallbackContext ctx)
