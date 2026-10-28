@@ -227,67 +227,6 @@
                     "isPartOfComposite": false
                 }
             ]
-        },
-        {
-            "name": "InteractionsDialogue",
-            "id": "bb72a4e3-9c6d-4564-ba51-1460a0669575",
-            "actions": [
-                {
-                    "name": "Talk",
-                    "type": "Button",
-                    "id": "9de586e2-61cb-4d91-b9cf-2c43abc71bd4",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "Press",
-                    "initialStateCheck": false,
-                    "priority": 0
-                },
-                {
-                    "name": "ContinueTalk",
-                    "type": "Button",
-                    "id": "95d28ddc-cc72-4347-a24e-7a02fd1a8787",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "Press",
-                    "initialStateCheck": false,
-                    "priority": 0
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "a68ddd9e-cc0c-41cb-ac53-aa3afcb73aa5",
-                    "path": "<Keyboard>/f",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Talk",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "fadc06d4-60b3-4957-9691-90fee85e3f29",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ContinueTalk",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "06e883f0-4960-4dc3-9f03-c792a2dd5387",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ContinueTalk",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
         }
     ],
     "controlSchemes": []

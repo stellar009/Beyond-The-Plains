@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c8b2024ae0d0944eb878d90212bf21b, type: 3}
   m_Name: surprised
   m_EditorClassIdentifier: VRM10::UniVRM10.VRM10Expression
-  m_prefab: {fileID: 4467870057452417704, guid: ebe1cf487d0e47a40ba5d3c7663106b0, type: 3}
+  m_prefab: {fileID: -1728013695380148634, guid: ebe1cf487d0e47a40ba5d3c7663106b0, type: 3}
   MorphTargetBindings:
   - RelativePath: Face
     Index: 5

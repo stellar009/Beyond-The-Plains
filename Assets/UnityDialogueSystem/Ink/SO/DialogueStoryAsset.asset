@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2812ada36c94e7045b985bc28d2adaf0, type: 3}
+  m_Name: DialogueStoryAsset
+  m_EditorClassIdentifier: ZaiGames.DialogueSystem::ZaiGames.DialogueSystem.Core.DialogueStoryAsset
+  inkFile: {fileID: 6231892579173505729, guid: a4bca11c47133e34bbacb202ef46a77a, type: 3}
+  compiledJsonFallback: {fileID: 0}
+  freshInstanceEachCall: 1

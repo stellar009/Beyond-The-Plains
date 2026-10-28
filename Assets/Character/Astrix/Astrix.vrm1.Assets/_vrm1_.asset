@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88684271e27adb843b6570957c9e7637, type: 3}
   m_Name: _vrm1_
   m_EditorClassIdentifier: VRM10::UniVRM10.VRM10Object
-  m_prefab: {fileID: 4467870057452417704, guid: ebe1cf487d0e47a40ba5d3c7663106b0, type: 3}
+  m_prefab: {fileID: -1728013695380148634, guid: ebe1cf487d0e47a40ba5d3c7663106b0, type: 3}
   Meta:
-    Name: Astrix
+    Name: A1
     Version: 1.0
     Authors:
     - stellar009
     CopyrightInformation: 
-    ContactInformation: dheeraj32vi@gmail.com
+    ContactInformation: 
     References: []
     ThirdPartyLicenses: 
-    Thumbnail: {fileID: 2178681595258467215, guid: ebe1cf487d0e47a40ba5d3c7663106b0, type: 3}
+    Thumbnail: {fileID: 2800000, guid: 599943b854834bc41a68d06ce29d4fc7, type: 3}
     AvatarPermission: 0
     ViolentUsage: 0
     SexualUsage: 0

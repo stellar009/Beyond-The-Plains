@@ -6,7 +6,6 @@ public class GameInputManager : MonoBehaviour
     private InputAction_Game m_InputAction;
 
     public Vector2 playerMovement { get; private set; }
-    public bool nextDialouge { get; private set; }
 
     public bool isSprint { get; private set; }
 
@@ -15,6 +14,7 @@ public class GameInputManager : MonoBehaviour
         m_InputAction = new InputAction_Game();
     }
 
+    #region Key Subscriptions
     private void OnEnable()
     {
         m_InputAction.Player.Enable();
@@ -38,7 +38,9 @@ public class GameInputManager : MonoBehaviour
         m_InputAction.Player.Disable();
         m_InputAction.Interactions.Disable();
     }
+    #endregion
 
+    #region Key Mapping
     void OnPlayerMovementPerformed(InputAction.CallbackContext ctx)
     {
         playerMovement = ctx.ReadValue<Vector2>();
@@ -54,45 +56,13 @@ public class GameInputManager : MonoBehaviour
         isSprint = !isSprint;
     }
 
-    void StartTalking(InputAction.CallbackContext ctx)
-    {
-        
-    }
-
-    void ContinueTalking(InputAction.CallbackContext ctx)
-    {
-        
-    }
-
     void ActivateCursor(InputAction.CallbackContext ctx)
     {
         GameManager.instance.EnableCursor(ctx.ReadValueAsButton());
     }
+    #endregion
 
-    public void TalkingStarted(bool start)
-    {
-        if (start)
-        {
-            m_InputAction.InteractionsDialogue.Talk.Disable();
-        }
-        else
-        {
-            m_InputAction.InteractionsDialogue.Talk.Enable();
-        }
-    }
-
-    public void DialogueCompleted(bool complete)
-    {
-        if (complete)
-        {
-            m_InputAction.InteractionsDialogue.ContinueTalk.Disable();
-        }
-        else
-        {
-            m_InputAction.InteractionsDialogue.ContinueTalk.Enable();
-        }
-    }
-
+    #region Custom Functions
     public void EnableSprint(bool enable)
     {
         if (enable)
@@ -104,22 +74,5 @@ public class GameInputManager : MonoBehaviour
             m_InputAction.Player.Sprint.Disable();
         }
     }
-
-    public void EnableDialogueInteraction(bool enable)
-    {
-        if(enable)
-        {
-            m_InputAction.InteractionsDialogue.Enable();
-
-            m_InputAction.InteractionsDialogue.Talk.performed += StartTalking;
-            m_InputAction.InteractionsDialogue.ContinueTalk.performed += ContinueTalking;
-        }
-        else
-        {
-            m_InputAction.InteractionsDialogue.ContinueTalk.performed -= ContinueTalking;
-            m_InputAction.InteractionsDialogue.Talk.performed -= StartTalking;
-
-            m_InputAction.InteractionsDialogue.Disable();
-        }
-    }
+    #endregion
 }

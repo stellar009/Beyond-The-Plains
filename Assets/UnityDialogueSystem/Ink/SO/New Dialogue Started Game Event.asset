@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7fd3438a5a06ff4ea252319db588531, type: 3}
+  m_Name: New Dialogue Started Game Event
+  m_EditorClassIdentifier: ZaiGames.DialogueSystem::ZaiGames.DialogueSystem.Events.DialogueStartedGameEvent
+  description: Raised when a story starts. Payload is the live Story.
