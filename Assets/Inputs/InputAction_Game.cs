@@ -313,6 +313,99 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""DialogueSystem"",
+            ""id"": ""d29573b7-e697-4079-8a42-38cd71930c5e"",
+            ""actions"": [
+                {
+                    ""name"": ""StopTextEffect"",
+                    ""type"": ""Button"",
+                    ""id"": ""3db4b8fa-7f0b-470b-8264-5c7c1dd59e53"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Press(pressPoint=0.3,behavior=2)"",
+                    ""initialStateCheck"": false,
+                    ""priority"": 0
+                },
+                {
+                    ""name"": ""StartThinking"",
+                    ""type"": ""Button"",
+                    ""id"": ""10e86da2-fd7f-4faa-9866-fa4d49a51b5b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false,
+                    ""priority"": 0
+                },
+                {
+                    ""name"": ""NextDialogue"",
+                    ""type"": ""Button"",
+                    ""id"": ""089b84f3-af06-46df-8717-58821ae31df6"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false,
+                    ""priority"": 0
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""7eafd4f7-f2b8-4b70-aa2a-ddf8ec914d28"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""StopTextEffect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c138c92e-f69d-402a-b3c6-34c05efdc412"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""StopTextEffect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5c0d4060-b24f-475f-ac49-029396404769"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""StartThinking"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""055121ec-38fb-4f39-8331-d764cbc261ae"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NextDialogue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7192b29f-f976-4152-a3a1-1e7c81f1af06"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NextDialogue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -330,6 +423,11 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
         // Interactions
         m_Interactions = asset.FindActionMap("Interactions", throwIfNotFound: true);
         m_Interactions_Cursor = m_Interactions.FindAction("Cursor", throwIfNotFound: true);
+        // DialogueSystem
+        m_DialogueSystem = asset.FindActionMap("DialogueSystem", throwIfNotFound: true);
+        m_DialogueSystem_StopTextEffect = m_DialogueSystem.FindAction("StopTextEffect", throwIfNotFound: true);
+        m_DialogueSystem_StartThinking = m_DialogueSystem.FindAction("StartThinking", throwIfNotFound: true);
+        m_DialogueSystem_NextDialogue = m_DialogueSystem.FindAction("NextDialogue", throwIfNotFound: true);
     }
 
     ~@InputAction_Game()
@@ -337,6 +435,7 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, InputAction_Game.Player.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Camera.enabled, "This will cause a leak and performance issues, InputAction_Game.Camera.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Interactions.enabled, "This will cause a leak and performance issues, InputAction_Game.Interactions.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_DialogueSystem.enabled, "This will cause a leak and performance issues, InputAction_Game.DialogueSystem.Disable() has not been called.");
     }
 
     /// <summary>
@@ -740,6 +839,124 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="InteractionsActions" /> instance referencing this action map.
     /// </summary>
     public InteractionsActions @Interactions => new InteractionsActions(this);
+
+    // DialogueSystem
+    private readonly InputActionMap m_DialogueSystem;
+    private List<IDialogueSystemActions> m_DialogueSystemActionsCallbackInterfaces = new List<IDialogueSystemActions>();
+    private readonly InputAction m_DialogueSystem_StopTextEffect;
+    private readonly InputAction m_DialogueSystem_StartThinking;
+    private readonly InputAction m_DialogueSystem_NextDialogue;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "DialogueSystem".
+    /// </summary>
+    public struct DialogueSystemActions
+    {
+        private @InputAction_Game m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public DialogueSystemActions(@InputAction_Game wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "DialogueSystem/StopTextEffect".
+        /// </summary>
+        public InputAction @StopTextEffect => m_Wrapper.m_DialogueSystem_StopTextEffect;
+        /// <summary>
+        /// Provides access to the underlying input action "DialogueSystem/StartThinking".
+        /// </summary>
+        public InputAction @StartThinking => m_Wrapper.m_DialogueSystem_StartThinking;
+        /// <summary>
+        /// Provides access to the underlying input action "DialogueSystem/NextDialogue".
+        /// </summary>
+        public InputAction @NextDialogue => m_Wrapper.m_DialogueSystem_NextDialogue;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_DialogueSystem; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="DialogueSystemActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(DialogueSystemActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="DialogueSystemActions" />
+        public void AddCallbacks(IDialogueSystemActions instance)
+        {
+            if (instance == null || m_Wrapper.m_DialogueSystemActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_DialogueSystemActionsCallbackInterfaces.Add(instance);
+            @StopTextEffect.started += instance.OnStopTextEffect;
+            @StopTextEffect.performed += instance.OnStopTextEffect;
+            @StopTextEffect.canceled += instance.OnStopTextEffect;
+            @StartThinking.started += instance.OnStartThinking;
+            @StartThinking.performed += instance.OnStartThinking;
+            @StartThinking.canceled += instance.OnStartThinking;
+            @NextDialogue.started += instance.OnNextDialogue;
+            @NextDialogue.performed += instance.OnNextDialogue;
+            @NextDialogue.canceled += instance.OnNextDialogue;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="DialogueSystemActions" />
+        private void UnregisterCallbacks(IDialogueSystemActions instance)
+        {
+            @StopTextEffect.started -= instance.OnStopTextEffect;
+            @StopTextEffect.performed -= instance.OnStopTextEffect;
+            @StopTextEffect.canceled -= instance.OnStopTextEffect;
+            @StartThinking.started -= instance.OnStartThinking;
+            @StartThinking.performed -= instance.OnStartThinking;
+            @StartThinking.canceled -= instance.OnStartThinking;
+            @NextDialogue.started -= instance.OnNextDialogue;
+            @NextDialogue.performed -= instance.OnNextDialogue;
+            @NextDialogue.canceled -= instance.OnNextDialogue;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="DialogueSystemActions.UnregisterCallbacks(IDialogueSystemActions)" />.
+        /// </summary>
+        /// <seealso cref="DialogueSystemActions.UnregisterCallbacks(IDialogueSystemActions)" />
+        public void RemoveCallbacks(IDialogueSystemActions instance)
+        {
+            if (m_Wrapper.m_DialogueSystemActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="DialogueSystemActions.AddCallbacks(IDialogueSystemActions)" />
+        /// <seealso cref="DialogueSystemActions.RemoveCallbacks(IDialogueSystemActions)" />
+        /// <seealso cref="DialogueSystemActions.UnregisterCallbacks(IDialogueSystemActions)" />
+        public void SetCallbacks(IDialogueSystemActions instance)
+        {
+            foreach (var item in m_Wrapper.m_DialogueSystemActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_DialogueSystemActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="DialogueSystemActions" /> instance referencing this action map.
+    /// </summary>
+    public DialogueSystemActions @DialogueSystem => new DialogueSystemActions(this);
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player" which allows adding and removing callbacks.
     /// </summary>
@@ -812,5 +1029,34 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnCursor(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "DialogueSystem" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="DialogueSystemActions.AddCallbacks(IDialogueSystemActions)" />
+    /// <seealso cref="DialogueSystemActions.RemoveCallbacks(IDialogueSystemActions)" />
+    public interface IDialogueSystemActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "StopTextEffect" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnStopTextEffect(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "StartThinking" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnStartThinking(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "NextDialogue" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnNextDialogue(InputAction.CallbackContext context);
     }
 }

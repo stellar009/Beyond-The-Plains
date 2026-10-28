@@ -227,6 +227,99 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "DialogueSystem",
+            "id": "d29573b7-e697-4079-8a42-38cd71930c5e",
+            "actions": [
+                {
+                    "name": "StopTextEffect",
+                    "type": "Button",
+                    "id": "3db4b8fa-7f0b-470b-8264-5c7c1dd59e53",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press(pressPoint=0.3,behavior=2)",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "StartThinking",
+                    "type": "Button",
+                    "id": "10e86da2-fd7f-4faa-9866-fa4d49a51b5b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "NextDialogue",
+                    "type": "Button",
+                    "id": "089b84f3-af06-46df-8717-58821ae31df6",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "7eafd4f7-f2b8-4b70-aa2a-ddf8ec914d28",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StopTextEffect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c138c92e-f69d-402a-b3c6-34c05efdc412",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StopTextEffect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5c0d4060-b24f-475f-ac49-029396404769",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StartThinking",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "055121ec-38fb-4f39-8331-d764cbc261ae",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NextDialogue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7192b29f-f976-4152-a3a1-1e7c81f1af06",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NextDialogue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
