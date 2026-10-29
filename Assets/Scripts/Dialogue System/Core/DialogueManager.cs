@@ -55,6 +55,7 @@ namespace DialogueSystem.Core
 
         void SentenceEnd()
         {
+        CancelInvoke();
             m_DialogueSystemUI.CompleteThinking();
             sentences.Clear();
         }
