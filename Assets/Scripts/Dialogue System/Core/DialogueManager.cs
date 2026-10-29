@@ -1,6 +1,7 @@
 using DialogueSystem.Essentials;
 using DialogueSystem.UI;
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 namespace DialogueSystem.Core
@@ -11,13 +12,17 @@ namespace DialogueSystem.Core
         private DialogueSystemUI m_DialogueSystemUI;
 
         public bool autoNextDialouge = true;
-        [Range (0.5f, 1f)] public float delayToNextDialogue = 0.5f;
+        [Range (0.5f, 5f)] public float delayToNextDialogue = 0.5f;
+
+        private WaitForSeconds delay;
 
         private void Start()
         {
             sentences = new Queue<string>();
 
             m_DialogueSystemUI = FindAnyObjectByType<DialogueSystemUI>();
+
+            delay = new WaitForSeconds (delayToNextDialogue);
         }
 
         public void StartDialogue(PlayerThoughts thought)
@@ -33,7 +38,7 @@ namespace DialogueSystem.Core
 
             if(autoNextDialouge)
             {
-                InvokeRepeating(nameof(DisplayNextSentence), delayToNextDialogue, delayToNextDialogue * 3);
+                StartCoroutine(AutoDialogue());
             }
             else
             {
@@ -55,9 +60,18 @@ namespace DialogueSystem.Core
 
         void SentenceEnd()
         {
-        CancelInvoke();
+            StopAllCoroutines();
             m_DialogueSystemUI.CompleteThinking();
             sentences.Clear();
+        }
+
+        IEnumerator AutoDialogue()
+        {
+            while (true)
+            {
+                DisplayNextSentence();
+                yield return delay;
+            }
         }
     }
 }
