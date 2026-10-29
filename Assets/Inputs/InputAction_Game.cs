@@ -108,17 +108,7 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
                     ""id"": ""7a90cfba-3d61-4b2d-88ea-e9d460088d50"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false,
-                    ""priority"": 0
-                },
-                {
-                    ""name"": ""Forward"",
-                    ""type"": ""Button"",
-                    ""id"": ""cf360624-1c75-44b2-b695-c0f87774eb72"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": ""Press(behavior=2)"",
+                    ""interactions"": ""Press(pressPoint=0.3,behavior=2)"",
                     ""initialStateCheck"": false,
                     ""priority"": 0
                 }
@@ -198,17 +188,6 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Sprint"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""cdbea032-0de8-4e30-a459-165422c80e89"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Forward"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -329,16 +308,6 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
                     ""priority"": 0
                 },
                 {
-                    ""name"": ""StartThinking"",
-                    ""type"": ""Button"",
-                    ""id"": ""10e86da2-fd7f-4faa-9866-fa4d49a51b5b"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false,
-                    ""priority"": 0
-                },
-                {
                     ""name"": ""NextDialogue"",
                     ""type"": ""Button"",
                     ""id"": ""089b84f3-af06-46df-8717-58821ae31df6"",
@@ -352,34 +321,12 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""7eafd4f7-f2b8-4b70-aa2a-ddf8ec914d28"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""StopTextEffect"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""c138c92e-f69d-402a-b3c6-34c05efdc412"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""StopTextEffect"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""5c0d4060-b24f-475f-ac49-029396404769"",
-                    ""path"": ""<Keyboard>/f"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""StartThinking"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -414,7 +361,6 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
-        m_Player_Forward = m_Player.FindAction("Forward", throwIfNotFound: true);
         // Camera
         m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
         m_Camera_MouseX = m_Camera.FindAction("MouseX", throwIfNotFound: true);
@@ -426,7 +372,6 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
         // DialogueSystem
         m_DialogueSystem = asset.FindActionMap("DialogueSystem", throwIfNotFound: true);
         m_DialogueSystem_StopTextEffect = m_DialogueSystem.FindAction("StopTextEffect", throwIfNotFound: true);
-        m_DialogueSystem_StartThinking = m_DialogueSystem.FindAction("StartThinking", throwIfNotFound: true);
         m_DialogueSystem_NextDialogue = m_DialogueSystem.FindAction("NextDialogue", throwIfNotFound: true);
     }
 
@@ -513,7 +458,6 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Sprint;
-    private readonly InputAction m_Player_Forward;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -533,10 +477,6 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Sprint".
         /// </summary>
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
-        /// <summary>
-        /// Provides access to the underlying input action "Player/Forward".
-        /// </summary>
-        public InputAction @Forward => m_Wrapper.m_Player_Forward;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -569,9 +509,6 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
-            @Forward.started += instance.OnForward;
-            @Forward.performed += instance.OnForward;
-            @Forward.canceled += instance.OnForward;
         }
 
         /// <summary>
@@ -589,9 +526,6 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
-            @Forward.started -= instance.OnForward;
-            @Forward.performed -= instance.OnForward;
-            @Forward.canceled -= instance.OnForward;
         }
 
         /// <summary>
@@ -844,7 +778,6 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_DialogueSystem;
     private List<IDialogueSystemActions> m_DialogueSystemActionsCallbackInterfaces = new List<IDialogueSystemActions>();
     private readonly InputAction m_DialogueSystem_StopTextEffect;
-    private readonly InputAction m_DialogueSystem_StartThinking;
     private readonly InputAction m_DialogueSystem_NextDialogue;
     /// <summary>
     /// Provides access to input actions defined in input action map "DialogueSystem".
@@ -861,10 +794,6 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "DialogueSystem/StopTextEffect".
         /// </summary>
         public InputAction @StopTextEffect => m_Wrapper.m_DialogueSystem_StopTextEffect;
-        /// <summary>
-        /// Provides access to the underlying input action "DialogueSystem/StartThinking".
-        /// </summary>
-        public InputAction @StartThinking => m_Wrapper.m_DialogueSystem_StartThinking;
         /// <summary>
         /// Provides access to the underlying input action "DialogueSystem/NextDialogue".
         /// </summary>
@@ -898,9 +827,6 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
             @StopTextEffect.started += instance.OnStopTextEffect;
             @StopTextEffect.performed += instance.OnStopTextEffect;
             @StopTextEffect.canceled += instance.OnStopTextEffect;
-            @StartThinking.started += instance.OnStartThinking;
-            @StartThinking.performed += instance.OnStartThinking;
-            @StartThinking.canceled += instance.OnStartThinking;
             @NextDialogue.started += instance.OnNextDialogue;
             @NextDialogue.performed += instance.OnNextDialogue;
             @NextDialogue.canceled += instance.OnNextDialogue;
@@ -918,9 +844,6 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
             @StopTextEffect.started -= instance.OnStopTextEffect;
             @StopTextEffect.performed -= instance.OnStopTextEffect;
             @StopTextEffect.canceled -= instance.OnStopTextEffect;
-            @StartThinking.started -= instance.OnStartThinking;
-            @StartThinking.performed -= instance.OnStartThinking;
-            @StartThinking.canceled -= instance.OnStartThinking;
             @NextDialogue.started -= instance.OnNextDialogue;
             @NextDialogue.performed -= instance.OnNextDialogue;
             @NextDialogue.canceled -= instance.OnNextDialogue;
@@ -978,13 +901,6 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSprint(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Forward" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnForward(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Camera" which allows adding and removing callbacks.
@@ -1044,13 +960,6 @@ public partial class @InputAction_Game: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnStopTextEffect(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "StartThinking" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnStartThinking(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "NextDialogue" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

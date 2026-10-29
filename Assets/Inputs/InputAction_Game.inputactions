@@ -22,17 +22,7 @@
                     "id": "7a90cfba-3d61-4b2d-88ea-e9d460088d50",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false,
-                    "priority": 0
-                },
-                {
-                    "name": "Forward",
-                    "type": "Button",
-                    "id": "cf360624-1c75-44b2-b695-c0f87774eb72",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "Press(behavior=2)",
+                    "interactions": "Press(pressPoint=0.3,behavior=2)",
                     "initialStateCheck": false,
                     "priority": 0
                 }
@@ -112,17 +102,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Sprint",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "cdbea032-0de8-4e30-a459-165422c80e89",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Forward",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -243,16 +222,6 @@
                     "priority": 0
                 },
                 {
-                    "name": "StartThinking",
-                    "type": "Button",
-                    "id": "10e86da2-fd7f-4faa-9866-fa4d49a51b5b",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false,
-                    "priority": 0
-                },
-                {
                     "name": "NextDialogue",
                     "type": "Button",
                     "id": "089b84f3-af06-46df-8717-58821ae31df6",
@@ -266,34 +235,12 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "7eafd4f7-f2b8-4b70-aa2a-ddf8ec914d28",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "StopTextEffect",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "c138c92e-f69d-402a-b3c6-34c05efdc412",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "StopTextEffect",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "5c0d4060-b24f-475f-ac49-029396404769",
-                    "path": "<Keyboard>/f",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "StartThinking",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

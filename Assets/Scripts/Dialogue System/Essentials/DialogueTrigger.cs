@@ -1,5 +1,6 @@
 using DialogueSystem.Core;
 using UnityEngine;
+using BeyondThePlains.InputSystem;
 
 namespace DialogueSystem.Essentials
 {

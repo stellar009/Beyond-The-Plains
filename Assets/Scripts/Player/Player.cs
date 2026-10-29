@@ -1,5 +1,6 @@
 using Unity.Cinemachine;
 using UnityEngine;
+using BeyondThePlains.InputSystem;
 
 public class Player : MonoBehaviour
 {
