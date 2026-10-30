@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2045289656533689812}
   m_Layer: 0
   m_Name: Astrix
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -153,7 +153,7 @@ PrefabInstance:
     - target: {fileID: 4870552773557632513, guid: ebe1cf487d0e47a40ba5d3c7663106b0, type: 3}
       propertyPath: m_Avatar
       value: 
-      objectReference: {fileID: 9000000, guid: 4763bcb70b4ef6441a72da11805297df, type: 2}
+      objectReference: {fileID: 9000000, guid: 20457aad3033b594b82b6598ed15e5c9, type: 2}
     - target: {fileID: 4870552773557632513, guid: ebe1cf487d0e47a40ba5d3c7663106b0, type: 3}
       propertyPath: m_Controller
       value: 
