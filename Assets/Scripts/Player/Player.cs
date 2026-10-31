@@ -5,19 +5,19 @@ using BeyondThePlains.InputSystem;
 public class Player : MonoBehaviour
 {
     [Header("Player Settings")]
-    public bool allowOnlyWalk = false;
     public float walkSpeed = 2f;
     public float runSpeed = 8f;
     public float rotationSpeed = 5f;
     public float gravity = -9.81f;
+    public bool allowOnlyWalk = false;
 
     [Header("Player Animation Settings")]
     public string animationBlendName = "Speed";
     [Range(0.1f, 1f)] public float animationSmoothTime = 0.2f;
 
     [Header("Camera Animation Settings")]
-    public bool allowOnlyWalkCamAngle = false;
     public Animator cameraAnimator;
+    public bool allowOnlyWalkCamAngle = false;
     public string cameraAnimBlendName = "ChangeAngle";
     [Range(0.1f, 1f)] public float cameraAnimationSmoothTime = 0.2f;
 

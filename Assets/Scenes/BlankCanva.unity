@@ -843,6 +843,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2045289656533689812, guid: ddbea0c47f77a9e4b8bdc07e9cdd136b, type: 3}
+      propertyPath: allowOnlyFwdMovement
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2045289656533689812, guid: ddbea0c47f77a9e4b8bdc07e9cdd136b, type: 3}
       propertyPath: allowOnlyWalkCamAngle
       value: 1
       objectReference: {fileID: 0}

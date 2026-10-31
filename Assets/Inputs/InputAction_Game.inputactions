@@ -25,6 +25,16 @@
                     "interactions": "Press(pressPoint=0.3,behavior=2)",
                     "initialStateCheck": false,
                     "priority": 0
+                },
+                {
+                    "name": "FwdMovement",
+                    "type": "Button",
+                    "id": "6e90fee0-15bb-4db7-857b-501f235371ec",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press(pressPoint=0.3,behavior=2)",
+                    "initialStateCheck": false,
+                    "priority": 0
                 }
             ],
             "bindings": [
@@ -102,6 +112,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "195950cd-ba00-4d99-af93-33b7da4bdf6f",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FwdMovement",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
