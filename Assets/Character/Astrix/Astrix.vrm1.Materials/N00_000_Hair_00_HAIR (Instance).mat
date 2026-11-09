@@ -14,6 +14,7 @@ Material:
   m_ValidKeywords:
   - _ALPHATEST_ON
   - _MTOON_EMISSIVEMAP
+  - _MTOON_OUTLINE_WORLD
   - _MTOON_RIMMAP
   - _NORMALMAP
   m_InvalidKeywords: []
@@ -79,15 +80,15 @@ Material:
     - _M_SrcBlend: 1
     - _M_ZWrite: 1
     - _OutlineLightingMix: 1
-    - _OutlineWidth: 0
-    - _OutlineWidthMode: 0
+    - _OutlineWidth: 0.00125
+    - _OutlineWidthMode: 1
     - _RenderQueueOffset: 0
     - _RimFresnelPower: 100
     - _RimLift: 0.1
     - _RimLightingMix: 1
-    - _ShadingShiftFactor: -0.19999999
+    - _ShadingShiftFactor: 0.79333293
     - _ShadingShiftTexScale: 1
-    - _ShadingToonyFactor: 0.8
+    - _ShadingToonyFactor: 1
     - _TransparentWithZWrite: 0
     - _UvAnimRotationSpeed: 0
     - _UvAnimScrollXSpeed: 0
@@ -96,7 +97,7 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0.21568628, g: 0.21568628, b: 0.21568628, a: 1}
     - _MatcapColor: {r: 1, g: 1, b: 1, a: 1}
-    - _OutlineColor: {r: 0.2745097, g: 0.090195976, b: 0.12549007, a: 1}
+    - _OutlineColor: {r: 0.05660379, g: 0.05660379, b: 0.05660379, a: 1}
     - _RimColor: {r: 0, g: 0, b: 0, a: 1}
     - _ShadeColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

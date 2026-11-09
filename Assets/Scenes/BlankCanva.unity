@@ -827,28 +827,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2045289656533689812, guid: ddbea0c47f77a9e4b8bdc07e9cdd136b, type: 3}
-      propertyPath: walkSpeed
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2045289656533689812, guid: ddbea0c47f77a9e4b8bdc07e9cdd136b, type: 3}
       propertyPath: allowOnlyWalk
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2045289656533689812, guid: ddbea0c47f77a9e4b8bdc07e9cdd136b, type: 3}
       propertyPath: cameraAnimator
       value: 
       objectReference: {fileID: 1573510713}
     - target: {fileID: 2045289656533689812, guid: ddbea0c47f77a9e4b8bdc07e9cdd136b, type: 3}
-      propertyPath: allowOnlyForward
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2045289656533689812, guid: ddbea0c47f77a9e4b8bdc07e9cdd136b, type: 3}
-      propertyPath: allowOnlyFwdMovement
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2045289656533689812, guid: ddbea0c47f77a9e4b8bdc07e9cdd136b, type: 3}
       propertyPath: allowOnlyWalkCamAngle
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9202774160306702293, guid: ddbea0c47f77a9e4b8bdc07e9cdd136b, type: 3}
       propertyPath: m_Name

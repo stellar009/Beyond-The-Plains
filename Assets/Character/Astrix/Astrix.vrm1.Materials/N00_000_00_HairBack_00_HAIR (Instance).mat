@@ -84,9 +84,9 @@ Material:
     - _RimFresnelPower: 100
     - _RimLift: 0.1
     - _RimLightingMix: 1
-    - _ShadingShiftFactor: -0.19999999
+    - _ShadingShiftFactor: 0.79333293
     - _ShadingShiftTexScale: 1
-    - _ShadingToonyFactor: 0.8
+    - _ShadingToonyFactor: 1
     - _TransparentWithZWrite: 0
     - _UvAnimRotationSpeed: 0
     - _UvAnimScrollXSpeed: 0

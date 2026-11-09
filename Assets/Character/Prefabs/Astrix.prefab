@@ -71,15 +71,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f581bfca6a8840458638badace94834, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
-  allowOnlyWalk: 0
   walkSpeed: 2
   runSpeed: 8
   rotationSpeed: 1.5
   gravity: -9.81
+  allowOnlyWalk: 1
   animationBlendName: Speed
   animationSmoothTime: 0.2
-  allowOnlyWalkCamAngle: 0
   cameraAnimator: {fileID: 0}
+  allowOnlyWalkCamAngle: 1
   cameraAnimBlendName: ChangeAngle
   cameraAnimationSmoothTime: 0.5
 --- !u!1001 &4737551696837882849
@@ -153,7 +153,7 @@ PrefabInstance:
     - target: {fileID: 4870552773557632513, guid: ebe1cf487d0e47a40ba5d3c7663106b0, type: 3}
       propertyPath: m_Avatar
       value: 
-      objectReference: {fileID: 9000000, guid: 20457aad3033b594b82b6598ed15e5c9, type: 2}
+      objectReference: {fileID: 9000000, guid: fe07873e915fe494d9e1a919a85012af, type: 2}
     - target: {fileID: 4870552773557632513, guid: ebe1cf487d0e47a40ba5d3c7663106b0, type: 3}
       propertyPath: m_Controller
       value: 

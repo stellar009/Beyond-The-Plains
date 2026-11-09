@@ -14,6 +14,7 @@ Material:
   m_ValidKeywords:
   - _ALPHATEST_ON
   - _MTOON_EMISSIVEMAP
+  - _MTOON_OUTLINE_WORLD
   - _MTOON_RIMMAP
   - _NORMALMAP
   m_InvalidKeywords: []
@@ -79,15 +80,15 @@ Material:
     - _M_SrcBlend: 1
     - _M_ZWrite: 1
     - _OutlineLightingMix: 0
-    - _OutlineWidth: 0
-    - _OutlineWidthMode: 0
+    - _OutlineWidth: 0.00125
+    - _OutlineWidthMode: 1
     - _RenderQueueOffset: 0
     - _RimFresnelPower: 100
     - _RimLift: 0.1
     - _RimLightingMix: 1
-    - _ShadingShiftFactor: -0.050000012
+    - _ShadingShiftFactor: 0.9
     - _ShadingShiftTexScale: 1
-    - _ShadingToonyFactor: 0.95
+    - _ShadingToonyFactor: 0.9
     - _TransparentWithZWrite: 0
     - _UvAnimRotationSpeed: 0
     - _UvAnimScrollXSpeed: 0
